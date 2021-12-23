@@ -34,13 +34,13 @@
       </VBox.margin>
    </Label>
 
-   <PasswordField fx:id ="passwordTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="235.0" styleClass="rounded-textfields">
+   <PasswordField fx:id="passwordTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="235.0" styleClass="rounded-textfields">
       <font>
          <Font size="10.0" />
       </font>
    </PasswordField>
 
-   <Button id="loginButton" fx:id="loginButton" alignment="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="110.0" text="Login" textAlignment="CENTER">
+   <Button id="loginButton" fx:id="loginButton" alignment="CENTER" mnemonicParsing="false" onAction="#onLoginButtonClicked" prefHeight="30.0" prefWidth="110.0" text="Login" textAlignment="CENTER">
       <VBox.margin>
          <Insets left="62.0" top="30.0" />
       </VBox.margin>

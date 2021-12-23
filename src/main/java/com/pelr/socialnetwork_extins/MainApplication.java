@@ -11,6 +11,8 @@ import com.pelr.socialnetwork_extins.repository.database.MessageDBRepository;
 import com.pelr.socialnetwork_extins.repository.database.UserDBRepository;
 import com.pelr.socialnetwork_extins.service.*;
 import com.pelr.socialnetwork_extins.utils.Credentials;
+import com.pelr.socialnetwork_extins.utils.PasswordEncryptor;
+import com.pelr.socialnetwork_extins.utils.PasswordVerifier;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

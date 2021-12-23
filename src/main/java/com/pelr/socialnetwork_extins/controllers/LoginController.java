@@ -43,4 +43,10 @@ public class LoginController {
             e.printStackTrace();
         }
     }
+
+    public void onLoginButtonClicked(ActionEvent actionEvent) {
+        String email = emailTextField.getText();
+        String password = passwordTextField.getText();
+
+    }
 }
