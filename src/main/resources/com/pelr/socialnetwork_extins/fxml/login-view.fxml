@@ -20,7 +20,7 @@
       </VBox.margin>
      </Label>
 
-    <TextField maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="235.0" styleClass="rounded-textfields">
+    <TextField fx:id="emailTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="235.0" styleClass="rounded-textfields">
       <VBox.margin>
          <Insets bottom="30.0" />
       </VBox.margin></TextField>
@@ -34,7 +34,7 @@
       </VBox.margin>
    </Label>
 
-   <PasswordField maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="235.0" styleClass="rounded-textfields">
+   <PasswordField fx:id ="passwordTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="235.0" styleClass="rounded-textfields">
       <font>
          <Font size="10.0" />
       </font>

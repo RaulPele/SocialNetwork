@@ -1,0 +1,14 @@
+#rootLayout{
+    -fx-background-color: #202124
+}
+
+#createAccountButton{
+    -fx-background-color: #1877f2;
+    -fx-text-fill: white;
+}
+
+#createAccountButton:hover{
+    /*-fx-background-color: #166fe5;*/
+    -fx-background-color: #165be5
+
+}

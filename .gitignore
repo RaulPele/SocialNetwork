@@ -1,3 +1,4 @@
 .gradle
 build
 .idea
+src/main/java/com/pelr/socialnetwork_extins/utils/Credentials.java
