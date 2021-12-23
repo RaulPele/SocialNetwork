@@ -1,0 +1,28 @@
+#rootLayout{
+    -fx-background-color: #202124
+}
+
+.rounded-textfields {
+    /* -fx-background-radius: 8px;*/
+}
+
+#loginButton{
+    -fx-background-color: #1877f2;
+    -fx-text-fill: white;
+   /* -fx-background-radius: 7px;*/
+}
+
+#loginButton:hover{
+    -fx-background-color: #165be5
+}
+
+#createAccountButton{
+    -fx-background-color: #1877f2;
+    -fx-text-fill: white;
+}
+
+#createAccountButton:hover{
+    /*-fx-background-color: #166fe5;*/
+    -fx-background-color: #165be5
+
+}
