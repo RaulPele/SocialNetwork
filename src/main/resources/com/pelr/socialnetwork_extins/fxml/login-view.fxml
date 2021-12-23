@@ -19,10 +19,12 @@
          <Insets bottom="2.0" />
       </VBox.margin>
      </Label>
+
     <TextField maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="235.0" styleClass="rounded-textfields">
       <VBox.margin>
          <Insets bottom="30.0" />
       </VBox.margin></TextField>
+
    <Label text="Password" textFill="white" wrapText="true">
       <font>
          <Font size="14.0" />
@@ -31,12 +33,14 @@
          <Insets bottom="2.0" />
       </VBox.margin>
    </Label>
+
    <PasswordField maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="235.0" styleClass="rounded-textfields">
       <font>
          <Font size="10.0" />
       </font>
    </PasswordField>
-   <Button id="loginButton" alignment="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="110.0" text="Login" textAlignment="CENTER">
+
+   <Button id="loginButton" fx:id="loginButton" alignment="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="110.0" text="Login" textAlignment="CENTER">
       <VBox.margin>
          <Insets left="62.0" top="30.0" />
       </VBox.margin>
@@ -46,7 +50,7 @@
          <Insets top="25.0" />
       </VBox.margin>
    </Separator>
-   <Button id="createAccountButton" alignment="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="184.0" text="Create an account" textAlignment="CENTER">
+   <Button id="createAccountButton" fx:id="createAccountButton" alignment="CENTER" mnemonicParsing="false" onAction="#onCreateAccountButtonClicked" prefHeight="30.0" prefWidth="184.0" text="Create an account" textAlignment="CENTER">
       <VBox.margin>
          <Insets left="27.0" top="25.0" />
       </VBox.margin>
