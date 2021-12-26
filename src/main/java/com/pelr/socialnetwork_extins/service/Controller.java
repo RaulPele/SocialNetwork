@@ -49,8 +49,8 @@ public class Controller {
      * @param lastName  - last name string of the new user
      * @param email     - email of the new user
      */
-    public void saveUser(String firstName, String lastName, String email) {
-        userService.save(firstName, lastName, email);
+    public void addUser(String firstName, String lastName, String email, String password) {
+        userService.save(firstName, lastName, email, password);
     }
 
     /**
@@ -80,8 +80,8 @@ public class Controller {
      *
      * @param email - email of user that tries to log in
      */
-    public void login(String email){
-        authentication.login(email);
+    public void login(String email, String password){
+        authentication.login(email, password);
     }
 
     /**

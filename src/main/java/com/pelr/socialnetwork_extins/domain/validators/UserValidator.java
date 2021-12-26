@@ -55,15 +55,15 @@ public class UserValidator implements  Validator<User> {
         StringBuilder exceptionMsg = new StringBuilder();
 
         if (!validateName(entity.getFirstName())) {
-            exceptionMsg.append("Invalid first name!\n");
+            exceptionMsg.append("Invalid first name! ");
         }
 
         if (!validateName(entity.getLastName())) {
-            exceptionMsg.append("Invalid last name!\n");
+            exceptionMsg.append("Invalid last name! ");
         }
 
         if (!validateEmail(entity.getEmail())) {
-            exceptionMsg.append("Invalid email!\n");
+            exceptionMsg.append("Invalid email! ");
         }
 
         if (!exceptionMsg.isEmpty()) {

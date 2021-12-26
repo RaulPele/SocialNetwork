@@ -5,6 +5,7 @@ import com.pelr.socialnetwork_extins.service.Controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
@@ -27,6 +28,14 @@ public class LoginController {
     @FXML
     private PasswordField passwordTextField;
 
+    @FXML
+    private Label errorLabel;
+
+    @FXML
+    public void initialize(){
+        errorLabel.setVisible(false);
+    }
+
     public void setController(Controller controller){
         this.controller = controller;
     }
@@ -36,17 +45,31 @@ public class LoginController {
     }
 
     public void onCreateAccountButtonClicked(ActionEvent actionEvent){
+        changeToRegisterWindow();
+    }
+
+    private void changeToRegisterWindow(){
         try {
             sceneManager.changeToRegisterScene();
-        } catch (IOException e){
-
-            e.printStackTrace();
+            RegisterController registerController = sceneManager.getRegisterController();
+            registerController.setSceneManager(sceneManager);
+            registerController.setController(controller);
+        } catch (IOException ex){
+            ex.printStackTrace();
         }
+
     }
 
     public void onLoginButtonClicked(ActionEvent actionEvent) {
         String email = emailTextField.getText();
         String password = passwordTextField.getText();
 
+        try {
+            controller.login(email, password);
+            System.out.println("Logged in successfuly!");
+        } catch (Exception e) {
+            errorLabel.setVisible(true);
+            errorLabel.setText("Invalid email or password!");
+        }
     }
 }

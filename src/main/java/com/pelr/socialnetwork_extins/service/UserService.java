@@ -1,8 +1,10 @@
 package com.pelr.socialnetwork_extins.service;
 
 import com.pelr.socialnetwork_extins.domain.User;
+import com.pelr.socialnetwork_extins.domain.UserAuthCredentials;
 import com.pelr.socialnetwork_extins.repository.Repository;
 import com.pelr.socialnetwork_extins.repository.database.UserDBRepository;
+import com.pelr.socialnetwork_extins.utils.PasswordEncryptor;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -34,8 +36,14 @@ public class UserService {
      * @return savedUser - null if the entity was saved; user entity if the entity already exists.
      */
 
-    public User save(String firstName, String lastName, String email){
+    public User save(String firstName, String lastName, String email, String password){
         User user = new User(firstName, lastName, email);
+        PasswordEncryptor encryptor = new PasswordEncryptor();
+        UserAuthCredentials authCredentials = new UserAuthCredentials(email, encryptor.generatePasswordHash(password));
+
+        user.setAuthCredentials(authCredentials);
+
+        //TODO: check if user exists
 
         return usersRepository.save(user);
     }

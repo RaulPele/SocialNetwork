@@ -10,6 +10,7 @@ public class User extends Entity<Long> {
     private String firstName;
     private String lastName;
     private String email;
+    private UserAuthCredentials authCredentials;
 
     /**
      * Creates a user entity
@@ -45,6 +46,14 @@ public class User extends Entity<Long> {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public UserAuthCredentials getAuthCredentials() {
+        return authCredentials;
+    }
+
+    public void setAuthCredentials(UserAuthCredentials authCredentials) {
+        this.authCredentials = authCredentials;
     }
 
     @Override

@@ -14,9 +14,11 @@ import com.pelr.socialnetwork_extins.utils.Credentials;
 import com.pelr.socialnetwork_extins.utils.PasswordEncryptor;
 import com.pelr.socialnetwork_extins.utils.PasswordVerifier;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 
@@ -51,10 +53,18 @@ public class MainApplication extends Application {
 
         sceneManager.changeToLoginScene();
         LoginController loginController = sceneManager.getLoginController();
+
         loginController.setSceneManager(sceneManager);
+        loginController.setController(controller);
+
     }
+
 
     public static void main(String[] args) {
         launch();
+//        PasswordEncryptor encryptor = new PasswordEncryptor();
+//        String password = encryptor.generatePasswordHash("parolapaul");
+//
+//        System.out.println(password);
     }
 }

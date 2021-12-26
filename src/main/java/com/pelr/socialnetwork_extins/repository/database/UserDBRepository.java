@@ -31,7 +31,7 @@ public class UserDBRepository implements Repository<Long, User> {
 
         validator.validate(entity);
 
-        String addSql = "INSERT INTO \"Users\"(first_name, last_name, email) VALUES (?, ?, ?)";
+        String addSql = "INSERT INTO \"Users\"(first_name, last_name, email, password) VALUES (?, ?, ?, ?)";
 
         try(Connection connection = DriverManager.getConnection(url, username, password);
             PreparedStatement addStatement = connection.prepareStatement(addSql)){
@@ -39,6 +39,7 @@ public class UserDBRepository implements Repository<Long, User> {
             addStatement.setString( 1, entity.getFirstName());
             addStatement.setString(2, entity.getLastName());
             addStatement.setString(3, entity.getEmail());
+            addStatement.setString(4, entity.getAuthCredentials().getPassword());
 
             addStatement.executeUpdate();
         } catch (SQLException e) {
@@ -144,7 +145,7 @@ public class UserDBRepository implements Repository<Long, User> {
             return entity;
         }
 
-        String updateSql = "UPDATE \"Users\" SET first_name = ?, last_name = ?, email = ? WHERE id = ?";
+        String updateSql = "UPDATE \"Users\" SET first_name = ?, last_name = ?, email = ?, password = ? WHERE id = ?";
 
         try(Connection connection = DriverManager.getConnection(url, username, password);
             PreparedStatement updateStatement = connection.prepareStatement(updateSql)){
@@ -152,7 +153,8 @@ public class UserDBRepository implements Repository<Long, User> {
             updateStatement.setString(1, entity.getFirstName());
             updateStatement.setString(2, entity.getLastName());
             updateStatement.setString(3, entity.getEmail());
-            updateStatement.setLong(4, entity.getID());
+            updateStatement.setString(4, entity.getAuthCredentials().getPassword());
+            updateStatement.setLong(5, entity.getID());
 
             updateStatement.executeUpdate();
         } catch(SQLException e){
@@ -180,10 +182,26 @@ public class UserDBRepository implements Repository<Long, User> {
                 user = new User(firstName, lastName, email);
                 user.setID(id);
             }
-        }catch  (SQLException e){
+        } catch  (SQLException e) {
             throw new RepositoryException("User database find user by email exception!\n" + e.getMessage());
         }
 
         return user;
+    }
+
+    public String getUserPasswordHash(String email) {
+        String getPasswordSql = "SELECT password FROM \"Users\" WHERE email = ?";
+
+        try(Connection connection = DriverManager.getConnection(url, username, password);
+            PreparedStatement getPasswordStatement = connection.prepareStatement(getPasswordSql)){
+
+            getPasswordStatement.setString(1, email);
+            ResultSet resultSet = getPasswordStatement.executeQuery();
+            resultSet.next();
+
+            return resultSet.getString("password");
+        } catch (SQLException e) {
+            throw new RepositoryException("User database get password hash error!\n" + e.getMessage());
+        }
     }
 }

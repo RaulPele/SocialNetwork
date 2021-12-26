@@ -2,12 +2,15 @@ package com.pelr.socialnetwork_extins.service;
 
 import com.pelr.socialnetwork_extins.domain.User;
 import com.pelr.socialnetwork_extins.repository.Repository;
+import com.pelr.socialnetwork_extins.repository.database.UserDBRepository;
+import com.pelr.socialnetwork_extins.utils.PasswordEncryptor;
+import com.pelr.socialnetwork_extins.utils.PasswordVerifier;
 
 /**
  * Authentication service class
  */
 public class Authentication {
-    private Repository<Long, User> userRepository;
+    private UserDBRepository userRepository;
     private User loggedUser;
 
     /**
@@ -15,7 +18,7 @@ public class Authentication {
      *
      * @param userRepository - Repository containing all the users
      */
-    public Authentication(Repository<Long, User> userRepository) {
+    public Authentication(UserDBRepository userRepository) {
         this.userRepository = userRepository;
         this.loggedUser= null;
     }
@@ -54,11 +57,17 @@ public class Authentication {
      * @param email - The email of the user that tries to log in
      * @throws UserNotFoundException if the specified user doesn't exist.
      */
-    public void login(String email){
+    public void login(String email, String password){
+        PasswordVerifier passwordVerifier = new PasswordVerifier();
         loggedUser = findUserByEmail(email);
 
         if(loggedUser == null){
             throw new UserNotFoundException("User with specified email address doesn't exist!");
+        }
+
+        String storedPasswordHash = userRepository.getUserPasswordHash(email);
+        if(!passwordVerifier.verifyPassword(password, storedPasswordHash)) {
+            throw new AuthenticationException("Incorrect password!");
         }
     }
 
@@ -72,6 +81,4 @@ public class Authentication {
     public boolean isLoggedIn(){
         return loggedUser != null;
     }
-
-    //comentariu de proba
 }
