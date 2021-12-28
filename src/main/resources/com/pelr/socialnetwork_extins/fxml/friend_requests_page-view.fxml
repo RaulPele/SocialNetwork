@@ -7,14 +7,14 @@
 <?import javafx.scene.layout.FlowPane?>
 
 <AnchorPane id="rootLayout" fx:id="rootLayout" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="610.0" prefWidth="700" stylesheets="@../css/friend_requests_page_stylesheet.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pelr.socialnetwork_extins.controllers.FriendRequestsPageController">
-    <Button id="homeButton" fx:id="homeButton" layoutX="37.0" layoutY="22.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Home" />
-   <ScrollPane id="requestsScrollPane" fx:id="requestsScrollPane" hbarPolicy="NEVER" layoutX="7.0" layoutY="75.0" prefHeight="525.0" prefWidth="685.0">
-      <content>
-          <FlowPane fx:id="requestsPane" hgap="20.0" prefHeight="535.0" prefWidth="685.0" vgap="10.0">
-            <padding>
-               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-            </padding></FlowPane>
-      </content>
-   </ScrollPane>
+    <Button id="homeButton" fx:id="homeButton" onAction="#onHomeButtonClicked" layoutX="37.0" layoutY="22.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Home" />
+    <ScrollPane id="requestsScrollPane" fx:id="requestsScrollPane" hbarPolicy="NEVER" layoutX="7.0" layoutY="75.0"
+                prefHeight="525.0" prefWidth="685.0">
+        <FlowPane fx:id="requestsPane" hgap="20.0" prefHeight="535.0" prefWidth="685.0" vgap="10.0">
+          <padding>
+              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+          </padding>
+        </FlowPane>
+    </ScrollPane>
 
 </AnchorPane>

@@ -52,16 +52,16 @@ public class MainApplication extends Application {
     private void initializeView(Stage stage) throws IOException{
         SceneManager sceneManager = new SceneManager(stage);
 
-//        sceneManager.changeToLoginScene();
-//        LoginController loginController = sceneManager.getLoginController();
-//
-//        loginController.setSceneManager(sceneManager);
-//        loginController.setController(controller);
+        sceneManager.changeToLoginScene();
+        LoginController loginController = sceneManager.getLoginController();
 
-        sceneManager.changeToFriendRequestsPageScene();
-        sceneManager.centerStageOnScreen();
-        FriendRequestsPageController friendRequestsPageController = sceneManager.getFriendRequestsPageController();
-        friendRequestsPageController.setSceneManager(sceneManager);
+        loginController.setSceneManager(sceneManager);
+        loginController.setController(controller);
+
+//        sceneManager.changeToFriendRequestsPageScene();
+//        sceneManager.centerStageOnScreen();
+//        FriendRequestsPageController friendRequestsPageController = sceneManager.getFriendRequestsPageController();
+//        friendRequestsPageController.setSceneManager(sceneManager);
 
     }
 

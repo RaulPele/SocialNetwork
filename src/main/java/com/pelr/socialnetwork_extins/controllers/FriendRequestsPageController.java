@@ -2,6 +2,8 @@ package com.pelr.socialnetwork_extins.controllers;
 
 import com.pelr.socialnetwork_extins.MainApplication;
 import com.pelr.socialnetwork_extins.SceneManager;
+import com.pelr.socialnetwork_extins.service.Controller;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -17,6 +19,7 @@ import java.io.IOException;
 public class FriendRequestsPageController {
 
     private SceneManager sceneManager;
+    private Controller controller;
 
     @FXML
     private Button homeButton;
@@ -33,6 +36,9 @@ public class FriendRequestsPageController {
     public void setSceneManager(SceneManager sceneManager) {
         this.sceneManager = sceneManager;
     }
+    public void setController(Controller controller) {
+        this.controller = controller;
+    }
 
     @FXML
     public void initialize() throws IOException {
@@ -47,8 +53,24 @@ public class FriendRequestsPageController {
             requestsPane.getChildren().add(requestView);
 
         }
+
         requestsScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
     }
 
+    public void onHomeButtonClicked(ActionEvent actionEvent) {
+        changeToHomePageScreen();
+    }
+
+    private void changeToHomePageScreen() {
+        try {
+            sceneManager.changeToHomePageScene();
+            sceneManager.centerStageOnScreen();
+            HomePageController homePageController = sceneManager.getHomePageController();
+            homePageController.setController(controller);
+            homePageController.setSceneManager(sceneManager);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
