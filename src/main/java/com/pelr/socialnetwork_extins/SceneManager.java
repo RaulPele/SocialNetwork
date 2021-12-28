@@ -1,7 +1,10 @@
 package com.pelr.socialnetwork_extins;
 
+import com.pelr.socialnetwork_extins.controllers.FriendRequestsPageController;
+import com.pelr.socialnetwork_extins.controllers.HomePageController;
 import com.pelr.socialnetwork_extins.controllers.LoginController;
 import com.pelr.socialnetwork_extins.controllers.RegisterController;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.TitledPane;
@@ -15,6 +18,8 @@ public class SceneManager {
 
     private LoginController loginController;
     private RegisterController registerController;
+    private HomePageController homePageController;
+    private FriendRequestsPageController friendRequestsPageController;
 
     public SceneManager(Stage window) {
         this.window = window;
@@ -28,9 +33,12 @@ public class SceneManager {
         return registerController;
     }
 
-    public void changeScene(Scene scene, String title) {
-        window.setTitle(title);
-        window.setScene(scene);
+    public HomePageController getHomePageController() {
+        return homePageController;
+    }
+
+    public FriendRequestsPageController getFriendRequestsPageController() {
+        return friendRequestsPageController;
     }
 
     public void changeToLoginScene() throws IOException {
@@ -55,11 +63,42 @@ public class SceneManager {
 
     private Scene initRegisterScene() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("fxml/register-view.fxml"));
-
         Scene registerScene = new Scene(fxmlLoader.load());
         registerController = fxmlLoader.getController();
         window.setTitle("Create an account");
 
         return registerScene;
+    }
+
+    public void changeToHomePageScene() throws IOException {
+        Scene homePageScene = initHomepageScene();
+        window.setScene(homePageScene);
+    }
+
+    private Scene initHomepageScene() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("fxml/home_page-view.fxml"));
+        Scene homePageScene = new Scene(fxmlLoader.load());
+        homePageController = fxmlLoader.getController();
+        window.setTitle("Social network");
+
+        return homePageScene;
+    }
+
+    public void centerStageOnScreen(){
+        this.window.centerOnScreen();
+    }
+
+    public void changeToFriendRequestsPageScene() throws IOException {
+        Scene friendRequestsPageScene = initFriendRequestsPageScene();
+        window.setScene(friendRequestsPageScene);
+    }
+
+    private Scene initFriendRequestsPageScene() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("fxml/friend_requests_page-view.fxml"));
+        Scene friendRequestsPageScene = new Scene(fxmlLoader.load());
+        friendRequestsPageController = fxmlLoader.getController();
+        window.setTitle("Friend Requests");
+
+        return friendRequestsPageScene;
     }
 }

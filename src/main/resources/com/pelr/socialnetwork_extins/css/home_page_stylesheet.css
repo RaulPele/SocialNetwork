@@ -1,0 +1,17 @@
+#rootLayout {
+    -fx-background-color: #202124
+}
+
+#profilePic {
+    -fx-background-radius: 30px;
+}
+
+#friendRequestsButton {
+    -fx-background-color: #1877f2;
+    -fx-text-fill: white;
+}
+
+#friendRequestsButton:hover{
+    -fx-background-color: #165be5
+
+}

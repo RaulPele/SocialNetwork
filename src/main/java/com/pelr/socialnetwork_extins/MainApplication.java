@@ -1,5 +1,6 @@
 package com.pelr.socialnetwork_extins;
 
+import com.pelr.socialnetwork_extins.controllers.FriendRequestsPageController;
 import com.pelr.socialnetwork_extins.controllers.LoginController;
 import com.pelr.socialnetwork_extins.domain.Friendship;
 import com.pelr.socialnetwork_extins.domain.Tuple;
@@ -51,11 +52,16 @@ public class MainApplication extends Application {
     private void initializeView(Stage stage) throws IOException{
         SceneManager sceneManager = new SceneManager(stage);
 
-        sceneManager.changeToLoginScene();
-        LoginController loginController = sceneManager.getLoginController();
+//        sceneManager.changeToLoginScene();
+//        LoginController loginController = sceneManager.getLoginController();
+//
+//        loginController.setSceneManager(sceneManager);
+//        loginController.setController(controller);
 
-        loginController.setSceneManager(sceneManager);
-        loginController.setController(controller);
+        sceneManager.changeToFriendRequestsPageScene();
+        sceneManager.centerStageOnScreen();
+        FriendRequestsPageController friendRequestsPageController = sceneManager.getFriendRequestsPageController();
+        friendRequestsPageController.setSceneManager(sceneManager);
 
     }
 

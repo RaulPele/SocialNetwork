@@ -45,10 +45,10 @@ public class LoginController {
     }
 
     public void onCreateAccountButtonClicked(ActionEvent actionEvent){
-        changeToRegisterWindow();
+        changeToRegisterScreen();
     }
 
-    private void changeToRegisterWindow(){
+    private void changeToRegisterScreen(){
         try {
             sceneManager.changeToRegisterScene();
             RegisterController registerController = sceneManager.getRegisterController();
@@ -66,10 +66,23 @@ public class LoginController {
 
         try {
             controller.login(email, password);
-            System.out.println("Logged in successfuly!");
+            //System.out.println("Logged in successfuly!");
+            changeToHomePageScreen();
         } catch (Exception e) {
             errorLabel.setVisible(true);
             errorLabel.setText("Invalid email or password!");
+        }
+    }
+
+    private void changeToHomePageScreen() {
+        try{
+            sceneManager.changeToHomePageScene();
+            sceneManager.centerStageOnScreen();
+            HomePageController homePageController = sceneManager.getHomePageController();
+            homePageController.setSceneManager(sceneManager);
+            homePageController.setController(controller);
+        } catch (IOException e){
+            e.printStackTrace();
         }
     }
 }

@@ -1,0 +1,26 @@
+#requestCardLayout {
+    -fx-background-color: #242526;
+    -fx-border-width: 1px;
+    -fx-border-color: rgb(62, 64, 66);
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+}
+
+#acceptButton {
+    -fx-background-color: #1877f2;
+    -fx-text-fill: white;
+}
+
+#acceptButton:hover{
+    -fx-background-color: #165be5
+}
+
+#declineButton {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-text-fill: white;
+
+}
+
+#declineButton:hover {
+    -fx-background-color: #4B4C4F;
+}

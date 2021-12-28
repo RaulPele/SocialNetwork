@@ -1,0 +1,50 @@
+#rootLayout {
+   /* -fx-background-color: #202124*/
+    -fx-background-color: #1c1e21;
+
+}
+#requestsPane{
+    -fx-background-color: #1c1e21;
+}
+
+#requestsScrollPane {
+    -fx-background-color: transparent;
+}
+
+#requestsScrollPane .scroll-bar:vertical {
+    -fx-background-color: red;
+    -fx-background-radius: 2em;
+}
+#requestsScrollPane .scroll-bar:vertical  .track{
+    -fx-background-color: gray;
+    -fx-background-radius: 2em;
+}
+
+#requestsScrollPane .scroll-bar:vertical .thumb{
+    -fx-background-radius: 2em;
+
+}
+
+#requestsScrollPane .scroll-bar:vertical .increment-button,
+#requestsScrollPane .scroll-bar:vertical .decrement-button{
+    -fx-background-color :transparent;
+    -fx-background-radius : 0.0em;
+    -fx-padding :0.0 5px 0.0 0.0;
+}
+
+#requestsScrollPane .scroll-bar:vertical .increment-arrow,
+#requestsScrollPane .scroll-bar:vertical .decrement-arrow{
+    -fx-shape : " ";
+
+
+}
+
+#homeButton {
+    -fx-background-color: #1877f2;
+    -fx-text-fill: white;
+}
+
+#homeButton:hover {
+    -fx-background-color: #165be5;
+}
+
