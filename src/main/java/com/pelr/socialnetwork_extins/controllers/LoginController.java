@@ -78,9 +78,12 @@ public class LoginController {
         try{
             sceneManager.changeToHomePageScene();
             sceneManager.centerStageOnScreen();
+
             HomePageController homePageController = sceneManager.getHomePageController();
             homePageController.setSceneManager(sceneManager);
             homePageController.setController(controller);
+            homePageController.initializeScreen();
+
         } catch (IOException e){
             e.printStackTrace();
         }

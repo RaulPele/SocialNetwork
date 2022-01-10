@@ -1,5 +1,6 @@
 #rootLayout{
-    -fx-background-color: #202124
+   /* -fx-background-color: #202124*/
+    -fx-background-color: #1c1e21;
 }
 
 .rounded-textfields {

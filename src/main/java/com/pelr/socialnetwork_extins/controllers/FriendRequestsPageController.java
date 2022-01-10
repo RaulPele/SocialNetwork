@@ -47,7 +47,7 @@ public class FriendRequestsPageController {
         requestsScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
     }
 
-    public void initialiseScreen() {
+    public void initializeScreen() {
         loadFriendRequests();
     };
 

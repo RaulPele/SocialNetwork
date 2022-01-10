@@ -1,0 +1,17 @@
+#rootLayout{
+    -fx-background-color: #1c1e21;
+    -fx-background-radius: 8px;
+}
+
+#contactImageView {
+    -fx-background-radius: 8px;
+}
+
+#contactLabel {
+    -fx-text-fill: white;
+
+}
+
+#rootLayout:hover{
+    -fx-background-color: rgba(68, 73, 80, 0.15);;
+}

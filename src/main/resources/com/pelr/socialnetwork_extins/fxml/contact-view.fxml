@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+
+<HBox id="rootLayout" fx:id="rootLayout" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="290.0" stylesheets="@../css/contact_stylesheet.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+
+    <ImageView id="contactImageView" fx:id="contactImageView" fitHeight="37.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+      <HBox.margin>
+         <Insets left="6.0" top="5.0" />
+      </HBox.margin></ImageView>
+    <Label id="contactLabel" fx:id="contactLabel" prefHeight="50.0" prefWidth="251.0" text="Firstname Lastname">
+        <padding>
+          <Insets left="5.0" />
+        </padding>
+    </Label>
+</HBox>
