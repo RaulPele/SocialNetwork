@@ -5,12 +5,12 @@ import java.time.LocalDateTime;
 /**
  * FriendshipDTO entity class
  */
-public class FriendshipDTO
-{
+public class FriendshipDTO {
     private String firstName;
     private String lastName;
     private String date;
     private String email;
+
     /**
      * create a FriendshippDTO entity
      */
@@ -54,11 +54,8 @@ public class FriendshipDTO
     }
 
     /**
-     *
      * @return a string with the parameters
      */
-
-
     @Override
     public String toString() {
         return "First name : " + firstName + "\n" + "Last name: " + lastName + "\n" + "Date: " + date + "\n" ;

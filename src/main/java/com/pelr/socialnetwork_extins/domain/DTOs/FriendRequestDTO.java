@@ -1,10 +1,8 @@
 package com.pelr.socialnetwork_extins.domain.DTOs;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class FriendRequestDTO
-{
+public class FriendRequestDTO {
     private String firstName;
     private String lastName;
     private String email;

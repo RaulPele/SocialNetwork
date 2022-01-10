@@ -146,11 +146,10 @@ public class FriendshipService {
      * @param userID - ID of the current user
      * @return all the current user's friendships
      */
-    public Iterable<Friendship> getFriendships(Long userID)
-    {
+    public Iterable<Friendship> getFriendships(Long userID) {
         List<Friendship> userFriendships ;
-
         Iterable<Friendship> friendships = friendshipRepository.findAll();
+
         userFriendships = StreamSupport.stream(friendships.spliterator(),false)
                 .filter(friendship-> friendship.getID().getLeft().equals(userID) ||
                         friendship.getID().getRight().equals(userID))
@@ -160,10 +159,10 @@ public class FriendshipService {
         return userFriendships;
     }
 
-    public Iterable<Friendship> getReceivedFriendRequests(Long userID)
-    {
+    public Iterable<Friendship> getReceivedFriendRequests(Long userID) {
         List<Friendship> receivedRequest;
         Iterable<Friendship> friendships = friendshipRepository.findAll();
+
         receivedRequest = StreamSupport.stream(friendships.spliterator(),false)
                 .filter(friendship->friendship.getID().getRight().equals(userID))
                 .filter(friendship -> friendship.getStatus() == Status.PENDING)
@@ -175,6 +174,7 @@ public class FriendshipService {
     public Iterable<Friendship> getAllFriendRequests(Long userID){
         List<Friendship> receivedRequest;
         Iterable<Friendship> friendships = friendshipRepository.findAll();
+
         receivedRequest = StreamSupport.stream(friendships.spliterator(),false)
                 .filter(friendship->friendship.getID().getRight().equals(userID))
                 .collect(Collectors.toList());
@@ -182,8 +182,8 @@ public class FriendshipService {
         return receivedRequest;
     }
 
-    public void rejectStatusFriendship(Long idFriend, Long idloggeduser) {
-        Tuple<Long, Long> idFriendship = new Tuple<>(idFriend,idloggeduser);
+    public void declineFriendRequest(Long friendID, Long loggedUserID) {
+        Tuple<Long, Long> idFriendship = new Tuple<>(friendID, loggedUserID);
         Friendship newStatusFriendship = new Friendship();
 
         newStatusFriendship.setStatus(Status.REJECTED);
@@ -192,13 +192,14 @@ public class FriendshipService {
         friendshipRepository.update(newStatusFriendship);
     }
 
-    public void approvedStatusFriendship(Long idFriend, Long idLoggedUser) {
-        Tuple<Long, Long> idFriendship = new Tuple<>(idFriend,idLoggedUser);
+    public void acceptFriendRequest(Long friendID, Long loggedUserID) {
+        Tuple<Long, Long> idFriendship = new Tuple<>(friendID, loggedUserID);
         Friendship newStatusFriendship = new Friendship();
 
         newStatusFriendship.setStatus(Status.APPROVED);
         newStatusFriendship.setDate(LocalDateTime.now());
         newStatusFriendship.setID(idFriendship);
+
         friendshipRepository.update(newStatusFriendship);
     }
 

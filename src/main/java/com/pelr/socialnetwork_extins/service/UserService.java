@@ -42,7 +42,6 @@ public class UserService {
         UserAuthCredentials authCredentials = new UserAuthCredentials(email, encryptor.generatePasswordHash(password));
 
         user.setAuthCredentials(authCredentials);
-
         //TODO: check if user exists
 
         return usersRepository.save(user);

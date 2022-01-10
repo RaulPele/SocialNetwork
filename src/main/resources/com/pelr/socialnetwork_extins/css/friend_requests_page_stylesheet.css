@@ -12,11 +12,11 @@
 }
 
 #requestsScrollPane .scroll-bar:vertical {
-    -fx-background-color: red;
+    -fx-background-color: transparent;
     -fx-background-radius: 2em;
 }
 #requestsScrollPane .scroll-bar:vertical  .track{
-    -fx-background-color: gray;
+    -fx-background-color: transparent;
     -fx-background-radius: 2em;
 }
 

@@ -53,6 +53,8 @@ public class HomePageController {
             FriendRequestsPageController friendRequestsPageController = sceneManager.getFriendRequestsPageController();
             friendRequestsPageController.setSceneManager(sceneManager);
             friendRequestsPageController.setController(controller);
+
+            friendRequestsPageController.initialiseScreen();
         } catch (IOException ex){
             ex.printStackTrace();
         }

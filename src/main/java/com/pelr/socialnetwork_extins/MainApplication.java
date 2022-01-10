@@ -68,9 +68,5 @@ public class MainApplication extends Application {
 
     public static void main(String[] args) {
         launch();
-//        PasswordEncryptor encryptor = new PasswordEncryptor();
-//        String password = encryptor.generatePasswordHash("parolapaul");
-//
-//        System.out.println(password);
     }
 }

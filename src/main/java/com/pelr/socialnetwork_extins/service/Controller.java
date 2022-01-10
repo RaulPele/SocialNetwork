@@ -10,7 +10,6 @@ import com.pelr.socialnetwork_extins.domain.Friendship;
 import com.pelr.socialnetwork_extins.domain.Graph;
 import com.pelr.socialnetwork_extins.domain.User;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -111,18 +110,17 @@ public class Controller {
     public String getNameOfLoggedUser()
     {
         StringBuilder userName = new StringBuilder();
-        try
-        {
+        try {
             User user = authentication.getLoggedUser();
             userName.append("User:  ").append(user.getFirstName()).append(" ").append(user.getLastName());
         }
-        catch (AuthenticationException ignored)
-        {
+        catch (AuthenticationException ignored) {
 
         }
 
         return userName.toString();
     }
+
     /**
      * Save friendship between current user and specified user.
      *
@@ -138,7 +136,7 @@ public class Controller {
      *
      * @param friendEmail - email of the specified user
      */
-    public void removeFriendship(String friendEmail){
+    public void removeFriendship(String friendEmail) {
         User loggedUser = authentication.getLoggedUser();
         friendshipService.remove(loggedUser.getID(), userService.findIDByUserEmail(friendEmail));
     }
@@ -148,20 +146,18 @@ public class Controller {
      *
      * @return friendshipDTOs - List containing the friends of current user
      */
-    public Iterable<FriendshipDTO> getFriendsOfLoggedUser(){
+    public Iterable<FriendshipDTO> getFriendsOfLoggedUser() {
         User loggedUser = authentication.getLoggedUser();
         Iterable<Friendship> friendships = friendshipService.getFriendships(loggedUser.getID());
-       // System.out.println("----------1--------");
+
         List<FriendshipDTO> friendshipDTOs =
         StreamSupport.stream(friendships.spliterator(),false)
                 .map(friendship -> {
                     Long friendID;
-                    if (!friendship.getID().getLeft().equals(loggedUser.getID()))
-                    {
+                    if (!friendship.getID().getLeft().equals(loggedUser.getID())) {
                         friendID = friendship.getID().getLeft();
                     }
-                    else
-                    {
+                    else {
                         friendID = friendship.getID().getRight();
                     }
 
@@ -175,7 +171,7 @@ public class Controller {
                     return new FriendshipDTO(firstName,lastName,date, email);
                 })
                 .collect(Collectors.toList());
-       // System.out.println("----------2--------");
+
         return friendshipDTOs;
     }
 
@@ -285,17 +281,16 @@ public class Controller {
     }
 
     public boolean userIsLoggedIn(){
-        try{
+        try {
             authentication.getLoggedUser();
             return true;
-        }catch (AuthenticationException ex){
+        } catch (AuthenticationException ex) {
             return false;
         }
     }
 
-    public ChatRoom createChatRoom(String email){
-        ChatRoom chatRoom = new ChatRoom(messagingService, authentication.getLoggedUser(), userService.findUserByEmail(email));
-        return chatRoom;
+    public ChatRoom createChatRoom(String email) {
+        return new ChatRoom(messagingService, authentication.getLoggedUser(), userService.findUserByEmail(email));
     }
 
     public void sendMessageToMultipleUsers(String message, String userEmails){
@@ -303,14 +298,12 @@ public class Controller {
         messagingService.save(authentication.getLoggedUser(), receivers, message, null);
     }
 
-    public Iterable<FriendRequestDTO> getReceivedFriendRequests()
-    {
+    public Iterable<FriendRequestDTO> getReceivedFriendRequests() {
         User loggedUser = authentication.getLoggedUser();
         List<FriendRequestDTO> friendRequestDTOs = new ArrayList<>();
         Iterable<Friendship> receivedRequests = friendshipService.getReceivedFriendRequests(loggedUser.getID());
 
-        receivedRequests.forEach(request ->
-        {
+        receivedRequests.forEach(request -> {
             String lastName, firstName, email, status;
             User sender = userService.findOne(request.getID().getLeft());
             lastName = sender.getLastName();
@@ -326,14 +319,12 @@ public class Controller {
         return friendRequestDTOs;
     }
 
-    public Iterable<FriendRequestDTO> getAllFriendRequests()
-    {
+    public Iterable<FriendRequestDTO> getAllFriendRequests() {
         User loggedUser = authentication.getLoggedUser();
         List<FriendRequestDTO> friendRequestDTOs = new ArrayList<>();
         Iterable<Friendship> receivedRequests = friendshipService.getAllFriendRequests(loggedUser.getID());
 
-        receivedRequests.forEach(request ->
-        {
+        receivedRequests.forEach(request -> {
             String lastName, firstName, email, status;
             User sender = userService.findOne(request.getID().getLeft());
             lastName = sender.getLastName();
@@ -349,18 +340,18 @@ public class Controller {
         return friendRequestDTOs;
     }
 
-    public void rejectStatusFriend(String friendEmail) {
+    public void acceptFriendRequest(String friendEmail) {
         Long friendID = userService.findIDByUserEmail(friendEmail);
         Long loggedUserID = authentication.getLoggedUser().getID();
 
-        friendshipService.rejectStatusFriendship(friendID, loggedUserID);
+        friendshipService.declineFriendRequest(friendID, loggedUserID);
     }
 
-    public void approvedStatusFriend(String friendEmail) {
+    public void declineFriendRequest(String friendEmail) {
         Long friendID = userService.findIDByUserEmail(friendEmail);
         Long loggedUserID = authentication.getLoggedUser().getID();
 
-        friendshipService.approvedStatusFriendship(friendID, loggedUserID);
+        friendshipService.acceptFriendRequest(friendID, loggedUserID);
     }
 
     public Iterable<FriendshipDTO> getFriendshipsFromDate(int year, String month) {
