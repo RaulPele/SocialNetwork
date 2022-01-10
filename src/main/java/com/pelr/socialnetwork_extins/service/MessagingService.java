@@ -37,4 +37,7 @@ public class MessagingService {
         return messagesRepository.getMessagesSortedByDateBetween(userId1, userId2);
     }
 
+    public List<Long> getAllReceiversOfMessage(Long messageID) {
+        return messagesRepository.getAllReceiversOfMessage(messageID);
+    }
 }

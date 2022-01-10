@@ -119,6 +119,16 @@ public class UserService {
         return user;
     }
 
+    public User findUserByName(String firstName, String lastName) {
+        User user = usersRepository.findUserByName(firstName, lastName);
+
+        if(user == null) {
+            throw new UserNotFoundException("User with specified name does not exist");
+        }
+
+        return user;
+    }
+
     public List<User> getUserListFromEmailsString(String userEmails){
         List<User> users = new ArrayList<>();
 
@@ -128,6 +138,22 @@ public class UserService {
                 users.add(user);
             } catch (UserNotFoundException e){
                 throw new UserNotFoundException("An email from the given list is invalid! Couldn't send message to users!");
+            }
+        }
+
+        return users;
+    }
+
+    public List<User> getUserListFromNamesString(String userNames) {
+        List<User> users = new ArrayList<>();
+
+        for(String name : userNames.split(";")){
+            try{
+                String[] names = name.split(" ");
+                User user = findUserByName(names[0], names[1]);
+                users.add(user);
+            } catch (UserNotFoundException e){
+                throw new UserNotFoundException("A name from the given list is invalid! Couldn't send message to users!");
             }
         }
 

@@ -1,0 +1,83 @@
+#chatRoomHeaderPane {
+    -fx-background-color: #1c1e21;
+}
+
+#contactHeaderImageView {
+    -fx-background-radius: 4px;
+}
+
+#messagesScrollPane {
+    -fx-background-color: #1c1e21;
+}
+
+#messageSendingPane {
+    -fx-background-color: #1c1e21;
+}
+
+#messagesPane {
+    -fx-background-color: #1c1e21;
+}
+
+#sendButton {
+    -fx-background-color: #1877f2;
+    -fx-text-fill: white;
+}
+
+#sendToListButton {
+    -fx-background-color: #1877f2;
+    -fx-text-fill: white;
+}
+
+#sendButton:hover {
+    -fx-background-color: #165be5;
+}
+
+#sendToListButton:hover {
+    -fx-background-color: #165be5;
+}
+
+#sentMessageLabel {
+    -fx-background-color: rgb(0, 132, 255);
+    -fx-padding: 8px;
+    -fx-font-size: 14px;
+    -fx-background-radius: 3em;
+    -fx-text-fill: white;
+    -fx-wrap-text: true;
+}
+
+#receivedMessageLabel {
+    -fx-background-color: rgb(62, 64, 66);;
+    -fx-padding: 8px;
+    -fx-font-size: 14px;
+    -fx-background-radius: 3em;
+    -fx-text-fill: white;
+    -fx-wrap-text: true;
+}
+
+
+
+#messagesScrollPane .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-background-radius: 2em;
+}
+#messagesScrollPane .scroll-bar:vertical  .track{
+    -fx-background-color: transparent;
+    -fx-background-radius: 2em;
+}
+
+#messagesScrollPane .scroll-bar:vertical .thumb{
+    -fx-background-radius: 2em;
+
+}
+
+#messagesScrollPane .scroll-bar:vertical .increment-button,
+#messagesScrollPane .scroll-bar:vertical .decrement-button{
+    -fx-background-color :transparent;
+    -fx-background-radius : 0.0em;
+    -fx-padding :0.0 5px 0.0 0.0;
+}
+
+#messagesScrollPane .scroll-bar:vertical .increment-arrow,
+#messagesScrollPane .scroll-bar:vertical .decrement-arrow{
+    -fx-shape : " ";
+}

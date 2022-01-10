@@ -2,6 +2,7 @@ package com.pelr.socialnetwork_extins.controllers;
 
 import com.pelr.socialnetwork_extins.MainApplication;
 import com.pelr.socialnetwork_extins.SceneManager;
+import com.pelr.socialnetwork_extins.domain.DTOs.ConversationHeaderDTO;
 import com.pelr.socialnetwork_extins.domain.User;
 import com.pelr.socialnetwork_extins.service.Controller;
 import javafx.event.ActionEvent;
@@ -9,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -16,6 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -56,23 +59,25 @@ public class HomePageController {
     }
 
     private void loadContactsList(){
-        Iterable<User> users = controller.findAllUsers();
-        users.forEach(user ->{
-            Node contactView = createContactView(user);
+        Iterable<ConversationHeaderDTO> users = controller.getConversationHeaders();
+        users.forEach(headerDTO ->{
+            Node contactView = createContactView(headerDTO);
             contactsListPane.getChildren().add(contactView);
         });
     }
 
-    private Node createContactView(User user) {
+    private Node createContactView(ConversationHeaderDTO headerDTO) {
         try {
             FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource("fxml/contact-view.fxml"));
             Parent contactView = loader.load();
             Label contactLabel = (Label) contactView.lookup("#contactLabel");
-            contactLabel.setText(user.getFirstName() + " " + user.getLastName());
+            contactLabel.setText(headerDTO.getReceiverFirstName() + " " + headerDTO.getReceiverLastName());
 
             ImageView contactImageView = (ImageView) contactView.lookup("#contactImageView");
             contactImageView.setImage(new Image(String.valueOf(MainApplication.class.getResource("assets/unknown_user.png"))));
             contactView.setId("contactView");
+
+            contactView.setOnMouseClicked(event -> openChatRoomView(headerDTO));
 
             return contactView;
         } catch (IOException e) {
@@ -80,6 +85,27 @@ public class HomePageController {
         }
 
         return null;
+    }
+
+    private void openChatRoomView(ConversationHeaderDTO header) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("fxml/chat_room-view.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = new Stage();
+
+            stage.setScene(scene);
+            stage.setTitle(header.getReceiverFirstName() + " "+ header.getReceiverLastName());
+            stage.centerOnScreen();
+            stage.show();
+
+
+            ChatRoomController chatRoomController = fxmlLoader.getController();
+            chatRoomController.setController(controller);
+            chatRoomController.initializeChatRoom(header.getReceiverEmail());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void onFriendRequestsButtonClicked(ActionEvent actionEvent) {

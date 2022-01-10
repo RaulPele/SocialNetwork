@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="rootLayout" fx:id="rootLayout" prefHeight="500.0" prefWidth="700.0" stylesheets="@../css/chat_room_stylesheet.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pelr.socialnetwork_extins.controllers.ChatRoomController">
+
+    <AnchorPane id="chatRoomHeaderPane" fx:id="chatRoomHeaderPane" prefHeight="50.0" prefWidth="700.0">
+        <Label fx:id="nameLabel" layoutX="73.0" layoutY="16.0" text="Firstname Lastname" textFill="white">
+            <font>
+                <Font size="15.0" />
+            </font>
+        </Label>
+
+      <ImageView fx:id="contactHeaderImageView" id = "contactHeaderImageView" fitHeight="41.0" fitWidth="41.0" layoutX="14.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true" />
+    </AnchorPane>
+
+    <ScrollPane id="messagesScrollPane" fx:id="messagesScrollPane" hbarPolicy="NEVER" layoutY="50.0"
+                minHeight="-Infinity" minWidth="-Infinity" prefHeight="465.0" prefWidth="700.0">
+        <GridPane fx:id="messagesPane" prefHeight="463.0" prefWidth="700.0" vgap="20.0">
+
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="230.0" minWidth="10.0" prefWidth="200.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="332.0" minWidth="10.0" prefWidth="300.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="423.0" minWidth="10.0" prefWidth="200.0"/>
+            </columnConstraints>
+            <padding>
+                <Insets left="8.0" top="6.0"/>
+            </padding>
+        </GridPane>
+    </ScrollPane>
+    <AnchorPane id="messageSendingPane" fx:id="messageSendingPane" layoutY="515.0" prefHeight="120.0" prefWidth="700.0">
+        <children>
+            <TextField fx:id="messageTextField" layoutX="33.0" layoutY="18.0" prefHeight="26.0" prefWidth="427.0" promptText="Write a message...">
+                <font>
+                    <Font size="14.0" />
+                </font>
+            </TextField>
+            <Button fx:id="sendButton" layoutX="515.0" layoutY="16.0" mnemonicParsing="false" onAction="#onSendButtonClicked" prefHeight="30.0" prefWidth="80.0" text="Send" />
+            <TextField fx:id="userListTextField" layoutX="33.0" layoutY="68.0" prefHeight="26.0" prefWidth="427.0" promptText="Send to...">
+                <font>
+                    <Font size="14.0" />
+                </font>
+            </TextField>
+            <Button fx:id="sendToListButton" layoutX="515.0" layoutY="66.0" mnemonicParsing="false" onAction="#onSendToListButtonClicked" prefHeight="30.0" prefWidth="80.0" text="Send to all" />
+        </children></AnchorPane>
+</AnchorPane>

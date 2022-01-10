@@ -290,7 +290,7 @@ public class Controller {
     }
 
     public ChatRoom createChatRoom(String email) {
-        return new ChatRoom(messagingService, authentication.getLoggedUser(), userService.findUserByEmail(email));
+        return new ChatRoom(messagingService, userService, authentication.getLoggedUser(), userService.findUserByEmail(email));
     }
 
     public void sendMessageToMultipleUsers(String message, String userEmails){
@@ -376,6 +376,10 @@ public class Controller {
                 .collect(Collectors.toList());
 
         return friendshipDTOs;
+    }
+
+    public User getLoggedUser(){
+        return authentication.getLoggedUser();
     }
 }
 

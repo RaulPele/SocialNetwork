@@ -8,12 +8,14 @@ import java.util.List;
 
 public class ChatRoom {
     private MessagingService messagingService;
+    private UserService userService;
     private User sender;
     private List<User> receivers;
     private List<Message> messages;
 
-    public ChatRoom(MessagingService messagingService, User sender, User receiver){
+    public ChatRoom(MessagingService messagingService, UserService userService, User sender, User receiver){
         this.messagingService = messagingService;
+        this.userService = userService;
         this.sender = sender;
         this.receivers = new ArrayList<>();
         receivers.add(receiver);
@@ -26,13 +28,29 @@ public class ChatRoom {
         messagingService.save(sender, receivers, message, null);
     }
 
-    public void reply(String message, int replyToIndex){
-        long repliedToId = 0;
+    public void reply(String message, long repliedToId){
 
-        try{
-            repliedToId = messages.get(replyToIndex).getID();
+        try {
             messagingService.save(sender, receivers, message, repliedToId);
-        }catch (IndexOutOfBoundsException e){
+        } catch (IndexOutOfBoundsException e) {
+            throw new MessageNotFound("There is no message at the given index!");
+        }
+    }
+
+    public void replyToAll(String message, long repliedToId){
+        try {
+            List<Long> receiversIds = messagingService.getAllReceiversOfMessage(repliedToId);
+            List<User> actualReceivers  = new ArrayList<>();
+
+            receiversIds.forEach(id -> {
+                if(id != sender.getID()) {
+                    actualReceivers.add(userService.findOne(id));
+                }
+            });
+
+            //actualReceivers.add(receivers.get(0));
+            messagingService.save(sender, actualReceivers, message, repliedToId);
+        } catch (IndexOutOfBoundsException e) {
             throw new MessageNotFound("There is no message at the given index!");
         }
     }
@@ -49,14 +67,18 @@ public class ChatRoom {
     }
 
     public List<Message> getMessages(){
-        if(messages == null){
-            initializeMessages();
-        }
+        initializeMessages();
 
         return messages;
     }
 
     public int getIndexOf(Message message){
         return messages.indexOf(message);
+    }
+
+    public void sendToMultipleUsers(String message, String userNames) {
+        List<User> messageReceivers = userService.getUserListFromNamesString(userNames);
+        messageReceivers.add(receivers.get(0));
+        messagingService.save(sender, messageReceivers, message, null);
     }
 }

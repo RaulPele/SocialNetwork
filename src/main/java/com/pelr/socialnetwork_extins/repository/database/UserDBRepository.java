@@ -204,4 +204,30 @@ public class UserDBRepository implements Repository<Long, User> {
             throw new RepositoryException("User database get password hash error!\n" + e.getMessage());
         }
     }
+
+    public User findUserByName(String firstName, String lastName) {
+        String findSql = "SELECT * FROM \"Users\" WHERE first_name = ? AND last_name = ?";
+        User user = null;
+
+        try(Connection connection = DriverManager.getConnection(url, username, password);
+            PreparedStatement findStatement = connection.prepareStatement(findSql)){
+
+            findStatement.setString(1, firstName);
+            findStatement.setString(2, lastName);
+
+            ResultSet resultSet = findStatement.executeQuery();
+
+            if(resultSet.next()){
+                Long id = resultSet.getLong("id");
+                String email = resultSet.getString("email");
+
+                user = new User(firstName, lastName, email);
+                user.setID(id);
+            }
+        }catch  (SQLException e){
+            throw new RepositoryException("User database find user by email exception!\n" + e.getMessage());
+        }
+
+        return user;
+    }
 }
