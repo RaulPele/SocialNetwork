@@ -14,9 +14,9 @@
 
     
 
-    <Button id="friendRequestsButton" fx:id="friendRequestsButton" layoutX="42.0" layoutY="291.0" mnemonicParsing="false" onAction="#onFriendRequestsButtonClicked" prefHeight="33.0" prefWidth="140.0" text="Friend Requests" />
-    <Button id="profileButton" fx:id="profileButton" layoutX="42.0" layoutY="334.0" mnemonicParsing="false" onAction="#onProfileButtonClicked" prefHeight="33.0" prefWidth="140.0" text="My Profile" />
-    <Button layoutX="42.0" layoutY="377.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="140.0" text="Button" />
+    <Button id="friendRequestsButton" fx:id="friendRequestsButton" layoutX="42.0" layoutY="324.0" mnemonicParsing="false" onAction="#onFriendRequestsButtonClicked" prefHeight="33.0" prefWidth="140.0" text="Friend Requests" />
+    <Button id="profileButton" fx:id="profileButton" layoutX="42.0" layoutY="367.0" mnemonicParsing="false" onAction="#onProfileButtonClicked" prefHeight="33.0" prefWidth="140.0" text="My Profile" />
+    <Button id="logoutButton" fx:id="logoutButton" layoutX="42.0" layoutY="626.0" mnemonicParsing="false" onAction="#onLogoutButtonClicked" prefHeight="33.0" prefWidth="140.0" text="Log out" />
    <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="42.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
       <image>
          <Image url="@../assets/unknown_user.png" />

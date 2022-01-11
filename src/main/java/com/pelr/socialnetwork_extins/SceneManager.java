@@ -18,6 +18,7 @@ public class SceneManager {
     private HomePageController homePageController;
     private FriendRequestsPageController friendRequestsPageController;
     private ProfilePageController profilePageController;
+    private FriendsPageController friendsPageController;
 
     public SceneManager(Stage window) {
         this.window = window;
@@ -33,6 +34,10 @@ public class SceneManager {
 
     public HomePageController getHomePageController() {
         return homePageController;
+    }
+
+    public FriendsPageController getFriendsPageController() {
+        return friendsPageController;
     }
 
     public ProfilePageController getProfilePageController() {
@@ -117,4 +122,19 @@ public class SceneManager {
 
         return profilePageScene;
     }
+
+    public void changeToFriendsPageScene() throws IOException {
+        Scene friendsPageScene = initFriendsPageScene();
+        window.setScene(friendsPageScene);
+    }
+
+    private Scene initFriendsPageScene() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("fxml/friends_page-view.fxml"));
+        Scene friendsPageScene = new Scene(fxmlLoader.load());
+        friendsPageController = fxmlLoader.getController();
+        window.setTitle("Friends");
+
+        return friendsPageScene;
+    }
+
 }

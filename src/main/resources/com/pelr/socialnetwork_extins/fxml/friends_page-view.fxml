@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+
+<AnchorPane id="rootLayout" fx:id="rootLayout" prefHeight="500.0" prefWidth="480.0" stylesheets="@../css/friends_page_stylesheet.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pelr.socialnetwork_extins.controllers.FriendsPageController">
+
+    <Button id="backButton" fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onBackButtonClicked" prefHeight="37.0" prefWidth="80.0" text="Back" />
+    <ScrollPane id="friendsScrollPane" fx:id="friendsScrollPane" hbarPolicy="NEVER" layoutX="62.0" layoutY="77.0" prefHeight="395.0" prefWidth="367.0">
+      <content>
+            <GridPane id="friendsGridPane" fx:id="friendsGridPane" prefHeight="393.0" prefWidth="368.0" vgap="15.0">
+                <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                </columnConstraints>
+            </GridPane>
+      </content>
+    </ScrollPane>
+</AnchorPane>

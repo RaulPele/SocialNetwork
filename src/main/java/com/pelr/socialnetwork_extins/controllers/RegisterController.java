@@ -3,6 +3,7 @@ package com.pelr.socialnetwork_extins.controllers;
 import com.pelr.socialnetwork_extins.SceneManager;
 import com.pelr.socialnetwork_extins.domain.validators.ValidationException;
 import com.pelr.socialnetwork_extins.service.Controller;
+import com.pelr.socialnetwork_extins.service.UserAlreadyExistsException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -10,6 +11,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import org.w3c.dom.Text;
+
+import java.io.IOException;
 
 public class RegisterController {
 
@@ -48,23 +51,41 @@ public class RegisterController {
     }
 
     public void onCreateAccountButtonClicked(ActionEvent actionEvent) {
+        try{
+            createAccount();
+            changeToLoginScreen();
+        } catch (ValidationException e) {
+            errorLabel.setVisible(true);
+            errorLabel.setText(e.getMessage());
+        } catch (UserAlreadyExistsException e){
+            errorLabel.setVisible(true);
+            errorLabel.setText("User already exists!");
+        }
+    }
+
+    private void createAccount() throws ValidationException, UserAlreadyExistsException {
         String email = emailTextField.getText();
         String firstName = firstNameTextField.getText();
         String lastName = lastNameTextField.getText();
         String password = passwordTextField.getText();
 
         if(password.isEmpty() || password.isBlank()) {
-            errorLabel.setVisible(true);
-            errorLabel.setText("Invalid password!");
-            return;
+            throw new ValidationException("Invalid password!");
         }
 
+        controller.addUser(firstName, lastName, email, password);
+
+    }
+
+    private void changeToLoginScreen() {
         try {
-            controller.addUser(firstName, lastName, email, password);
-        } catch (ValidationException e) {
-            errorLabel.setVisible(true);
-            errorLabel.setText(e.getMessage());
-        } catch (Exception e){
+            sceneManager.changeToLoginScene();
+            sceneManager.centerStageOnScreen();
+
+            LoginController loginController = sceneManager.getLoginController();
+            loginController.setSceneManager(sceneManager);
+            loginController.setController(controller);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

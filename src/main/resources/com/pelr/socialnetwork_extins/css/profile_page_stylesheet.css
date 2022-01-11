@@ -37,6 +37,11 @@
 
 #allFriendsLabel{
     -fx-text-fill: #1877f2;
+    -fx-background-radius: 8px;
+}
+
+#allFriendsLabel:hover  {
+    -fx-background-color: #242526;
 }
 
 #friendsVBox{

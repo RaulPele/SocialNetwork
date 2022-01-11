@@ -7,18 +7,22 @@
     -fx-background-radius: 30px;
 }
 
-#friendRequestsButton, #profileButton {
+#friendRequestsButton, #profileButton, #logoutButton {
     -fx-background-color: #1877f2;
     -fx-text-fill: white;
 }
 
 #friendRequestsButton:hover{
-    -fx-background-color: #165be5
+    -fx-background-color: #165be5;
 
 }
 
 #profileButton:hover {
-    -fx-background-color: #165be5
+    -fx-background-color: #165be5;
+}
+
+#logoutButton:hover {
+    -fx-background-color: #165be5 ;
 }
 
 #contactsListScrollPane{
@@ -38,3 +42,4 @@
 #contactView :hover {
     -fx-background-color: rgba(68, 73, 80, 0.15);
 }
+

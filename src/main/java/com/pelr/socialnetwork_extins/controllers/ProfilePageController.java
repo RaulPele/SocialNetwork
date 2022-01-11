@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
@@ -125,6 +126,23 @@ public class ProfilePageController {
             homePageController.setController(controller);
             homePageController.setSceneManager(sceneManager);
             homePageController.initializeScreen();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void onSeeAllFriendsLabelClicked(MouseEvent mouseEvent) {
+        changeToFriendsScreen();
+    }
+
+    private void changeToFriendsScreen() {
+        try{
+            sceneManager.changeToFriendsPageScene();
+            sceneManager.centerStageOnScreen();
+            FriendsPageController friendsPageController = sceneManager.getFriendsPageController();
+            friendsPageController.setController(controller);
+            friendsPageController.setSceneManager(sceneManager);
+            friendsPageController.initializeScreen(profilePage.getProfileOwner().getEmail(), profilePage.getFriendList());
         } catch (IOException e) {
             e.printStackTrace();
         }

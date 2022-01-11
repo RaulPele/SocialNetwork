@@ -1,0 +1,47 @@
+#rootLayout {
+    -fx-background-color: #1c1e21;
+}
+
+#backButton {
+    -fx-background-color: #1877f2;
+    -fx-text-fill: white;
+}
+
+#backButton:hover {
+    -fx-background-color: #165be5;
+}
+
+
+#friendsScrollPane {
+    -fx-background-color: transparent;
+}
+
+#friendsScrollPane .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-background-radius: 2em;
+}
+#friendsScrollPane .scroll-bar:vertical  .track{
+    -fx-background-color: transparent;
+    -fx-background-radius: 2em;
+}
+
+#friendsScrollPane .scroll-bar:vertical .thumb{
+    -fx-background-radius: 2em;
+
+}
+
+#friendsScrollPane .scroll-bar:vertical .increment-button,
+#friendsScrollPane .scroll-bar:vertical .decrement-button{
+    -fx-background-color :transparent;
+    -fx-background-radius : 0.0em;
+    -fx-padding :0.0 5px 0.0 0.0;
+}
+
+#friendsScrollPane .scroll-bar:vertical .increment-arrow,
+#friendsScrollPane .scroll-bar:vertical .decrement-arrow{
+    -fx-shape : " ";
+}
+
+#friendsGridPane {
+    -fx-background-color: #1c1e21;
+}

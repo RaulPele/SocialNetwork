@@ -4,6 +4,7 @@ import com.pelr.socialnetwork_extins.domain.User;
 import com.pelr.socialnetwork_extins.domain.validators.Validator;
 import com.pelr.socialnetwork_extins.repository.Repository;
 import com.pelr.socialnetwork_extins.repository.RepositoryException;
+import com.pelr.socialnetwork_extins.service.UserAlreadyExistsException;
 
 import java.sql.*;
 import java.util.HashSet;
@@ -43,6 +44,11 @@ public class UserDBRepository implements Repository<Long, User> {
 
             addStatement.executeUpdate();
         } catch (SQLException e) {
+            if(e.getSQLState().equals("23505")) {
+                //unique violation
+                throw new UserAlreadyExistsException("User already exists!");
+            }
+
             throw new RepositoryException("User database table exception!\n" + e.getMessage());
         }
 

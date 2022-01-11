@@ -144,4 +144,22 @@ public class HomePageController {
             e.printStackTrace();
         }
     }
+
+    public void onLogoutButtonClicked(ActionEvent actionEvent) {
+        controller.logout();
+        changeToLoginScreen();
+    }
+
+    private void changeToLoginScreen() {
+        try{
+            sceneManager.changeToLoginScene();
+            sceneManager.centerStageOnScreen();
+
+            LoginController loginController = sceneManager.getLoginController();
+            loginController.setSceneManager(sceneManager);
+            loginController.setController(controller);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
