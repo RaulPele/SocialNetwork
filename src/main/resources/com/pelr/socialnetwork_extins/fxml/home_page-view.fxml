@@ -23,8 +23,8 @@
       </image>
    </ImageView>
 
-    <ScrollPane id="contactsListScrollPane" fx:id="contactsListScrollPane" hbarPolicy="NEVER" layoutX="910.0" layoutY="64.0" prefHeight="630.0" prefWidth="290.0">
-        <VBox id="contactsListPane" fx:id="contactsListPane" maxWidth="-Infinity" prefHeight="628.0" prefWidth="280.0" spacing="3.0">
+    <ScrollPane id="contactsListScrollPane" fx:id="contactsListScrollPane" hbarPolicy="NEVER" layoutX="900.0" layoutY="64.0" prefHeight="630.0" prefWidth="290.0">
+        <VBox id="contactsListPane" fx:id="contactsListPane" maxWidth="-Infinity" prefHeight="628.0" prefWidth="288.0" spacing="3.0">
             <Label id="contactsListLabel" fx:id="contactsListLabel" text="Contacts">
             <VBox.margin>
                <Insets />
@@ -32,7 +32,7 @@
             <padding>
                <Insets bottom="3.0" left="5.0" top="5.0" />
             </padding></Label>
-            <TextField id="contactsSearchTextField" fx:id="contactsSearchTextField" />
+            <TextField id="contactsSearchTextField" fx:id="contactsSearchTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="280.0" />
          <padding>
             <Insets left="4.0" right="4.0" top="5.0" />
          </padding>

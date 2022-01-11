@@ -3,8 +3,10 @@ package com.pelr.socialnetwork_extins.controllers;
 import com.pelr.socialnetwork_extins.MainApplication;
 import com.pelr.socialnetwork_extins.SceneManager;
 import com.pelr.socialnetwork_extins.domain.DTOs.ConversationHeaderDTO;
-import com.pelr.socialnetwork_extins.domain.User;
 import com.pelr.socialnetwork_extins.service.Controller;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,19 +15,27 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 public class HomePageController {
-
     private SceneManager sceneManager;
     private Controller controller;
+
+    private ObservableList<ConversationHeaderDTO> contacts;
 
     @FXML
     private ImageView profileImageView;
@@ -39,7 +49,8 @@ public class HomePageController {
     @FXML
     private VBox contactsListPane;
 
-
+    @FXML
+    private TextField contactsSearchTextField;
 
     public void setController(Controller controller) {
         this.controller = controller;
@@ -55,7 +66,10 @@ public class HomePageController {
     }
 
     public void initializeScreen() {
+        contacts = FXCollections.observableArrayList();
         loadContactsList();
+        contactsSearchTextField.textProperty().addListener(event -> handleContactsFilter());
+        contacts.addListener((ListChangeListener<ConversationHeaderDTO>) c -> showFilteredContacts());
     }
 
     private void loadContactsList(){
@@ -63,6 +77,7 @@ public class HomePageController {
         users.forEach(headerDTO ->{
             Node contactView = createContactView(headerDTO);
             contactsListPane.getChildren().add(contactView);
+            contacts.add(headerDTO);
         });
     }
 
@@ -161,5 +176,24 @@ public class HomePageController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void handleContactsFilter() {
+        String searchInput = contactsSearchTextField.getText().toLowerCase();
+
+        Predicate<ConversationHeaderDTO> nameStartsWith = contact -> contact.getReceiverFirstName().toLowerCase().startsWith(searchInput) ||
+                contact.getReceiverLastName().toLowerCase().startsWith(searchInput);
+
+        List<ConversationHeaderDTO> headers = new ArrayList<>();
+        controller.getConversationHeaders().forEach(headers::add);
+
+        contacts.setAll( headers.stream()
+                .filter(nameStartsWith)
+                .collect(Collectors.toList()));
+    }
+
+    private void showFilteredContacts() {
+        contactsListPane.getChildren().remove(2, contactsListPane.getChildren().size());
+        contacts.forEach(contact -> contactsListPane.getChildren().add(createContactView(contact)));
     }
 }
