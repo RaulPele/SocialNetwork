@@ -15,8 +15,8 @@
     
 
     <Button id="friendRequestsButton" fx:id="friendRequestsButton" layoutX="42.0" layoutY="291.0" mnemonicParsing="false" onAction="#onFriendRequestsButtonClicked" prefHeight="33.0" prefWidth="140.0" text="Friend Requests" />
-    <Button layoutX="42.0" layoutY="334.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="140.0" text="Button" />
-    <Button layoutX="42.0" layoutY="378.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="140.0" text="Button" />
+    <Button id="profileButton" fx:id="profileButton" layoutX="42.0" layoutY="334.0" mnemonicParsing="false" onAction="#onProfileButtonClicked" prefHeight="33.0" prefWidth="140.0" text="My Profile" />
+    <Button layoutX="42.0" layoutY="377.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="140.0" text="Button" />
    <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="42.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
       <image>
          <Image url="@../assets/unknown_user.png" />

@@ -8,6 +8,7 @@ import com.pelr.socialnetwork_extins.domain.DTOs.ConversationHeaderDTO;
 
 import com.pelr.socialnetwork_extins.domain.Friendship;
 import com.pelr.socialnetwork_extins.domain.Graph;
+import com.pelr.socialnetwork_extins.domain.Page;
 import com.pelr.socialnetwork_extins.domain.User;
 
 import java.time.LocalDateTime;
@@ -380,6 +381,21 @@ public class Controller {
 
     public User getLoggedUser(){
         return authentication.getLoggedUser();
+    }
+
+    public Page createProfilePage(String email) {
+        Page profilePage = new Page(userService.findUserByEmail(email));
+        profilePage.setFriendList(getFriends(email));
+
+        return profilePage;
+    }
+
+    public List<User> getFriends(String email) {
+        Iterable<Long> friendsIds = friendshipService.getFriends(userService.findIDByUserEmail(email));
+        List<User> friends = StreamSupport.stream(friendsIds.spliterator(), false)
+                .map(friendId -> userService.findOne(friendId)).collect(Collectors.toList());
+
+        return friends;
     }
 }
 

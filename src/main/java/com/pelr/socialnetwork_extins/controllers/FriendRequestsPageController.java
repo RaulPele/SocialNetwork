@@ -94,6 +94,7 @@ public class FriendRequestsPageController {
             HomePageController homePageController = sceneManager.getHomePageController();
             homePageController.setController(controller);
             homePageController.setSceneManager(sceneManager);
+            homePageController.initializeScreen();
         } catch (IOException e) {
             e.printStackTrace();
         }

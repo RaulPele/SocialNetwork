@@ -125,4 +125,23 @@ public class HomePageController {
             ex.printStackTrace();
         }
     }
+
+    public void onProfileButtonClicked(ActionEvent actionEvent) {
+        changeToProfilePageScreen(controller.getLoggedUser().getEmail());
+    }
+
+    private void changeToProfilePageScreen(String email) {
+        try {
+            sceneManager.changeToProfilePageScene();
+            sceneManager.centerStageOnScreen();
+
+            ProfilePageController profilePageController = sceneManager.getProfilePageController();
+            profilePageController.setSceneManager(sceneManager);
+            profilePageController.setController(controller);
+
+            profilePageController.initializeProfile(email);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
 }

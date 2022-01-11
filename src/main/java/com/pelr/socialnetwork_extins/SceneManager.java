@@ -1,9 +1,6 @@
 package com.pelr.socialnetwork_extins;
 
-import com.pelr.socialnetwork_extins.controllers.FriendRequestsPageController;
-import com.pelr.socialnetwork_extins.controllers.HomePageController;
-import com.pelr.socialnetwork_extins.controllers.LoginController;
-import com.pelr.socialnetwork_extins.controllers.RegisterController;
+import com.pelr.socialnetwork_extins.controllers.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -20,6 +17,7 @@ public class SceneManager {
     private RegisterController registerController;
     private HomePageController homePageController;
     private FriendRequestsPageController friendRequestsPageController;
+    private ProfilePageController profilePageController;
 
     public SceneManager(Stage window) {
         this.window = window;
@@ -35,6 +33,10 @@ public class SceneManager {
 
     public HomePageController getHomePageController() {
         return homePageController;
+    }
+
+    public ProfilePageController getProfilePageController() {
+        return profilePageController;
     }
 
     public FriendRequestsPageController getFriendRequestsPageController() {
@@ -100,5 +102,19 @@ public class SceneManager {
         window.setTitle("Friend Requests");
 
         return friendRequestsPageScene;
+    }
+
+    public void changeToProfilePageScene() throws IOException {
+        Scene profilePageScene = initProfilePageScene();
+        window.setScene(profilePageScene);
+    }
+
+    private Scene initProfilePageScene() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("fxml/profile_page-view.fxml"));
+        Scene profilePageScene = new Scene(fxmlLoader.load());
+        profilePageController = fxmlLoader.getController();
+        window.setTitle("Profile");
+
+        return profilePageScene;
     }
 }

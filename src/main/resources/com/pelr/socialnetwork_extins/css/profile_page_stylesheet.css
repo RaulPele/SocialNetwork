@@ -1,0 +1,45 @@
+#rootLayout {
+    -fx-background-color: #1c1e21;
+}
+
+#profileImageView {
+    -fx-border-width: 4px;
+    -fx-border-color: red;/*rgb(62, 64, 66);*/
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+}
+
+#profileNameLabel {
+    -fx-text-fill: white;
+}
+
+#requestButton {
+    -fx-background-color: #1877f2;
+    -fx-text-fill: white;
+}
+
+#requestButton:hover {
+    -fx-background-color: #165be5;
+}
+
+#homeButton {
+    -fx-background-color: #1877f2;
+    -fx-text-fill: white;
+}
+
+#homeButton:hover {
+    -fx-background-color: #165be5;;
+}
+
+#friendsLabel {
+    -fx-text-fill: white;
+}
+
+#allFriendsLabel{
+    -fx-text-fill: #1877f2;
+}
+
+#friendsVBox{
+    -fx-background-color: #242526;
+    -fx-background-radius: 8px;
+}

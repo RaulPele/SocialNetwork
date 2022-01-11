@@ -1,13 +1,13 @@
 #rootLayout {
    /* -fx-background-color: #202124*/
-    -fx-background-color: #1c1e21;;
+    -fx-background-color: #1c1e21;
 }
 
 #profilePic {
     -fx-background-radius: 30px;
 }
 
-#friendRequestsButton {
+#friendRequestsButton, #profileButton {
     -fx-background-color: #1877f2;
     -fx-text-fill: white;
 }
@@ -15,6 +15,10 @@
 #friendRequestsButton:hover{
     -fx-background-color: #165be5
 
+}
+
+#profileButton:hover {
+    -fx-background-color: #165be5
 }
 
 #contactsListScrollPane{
