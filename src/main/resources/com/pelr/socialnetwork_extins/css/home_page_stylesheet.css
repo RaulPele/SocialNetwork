@@ -43,3 +43,21 @@
     -fx-background-color: rgba(68, 73, 80, 0.15);
 }
 
+#suggestionsPopup {
+    -fx-pref-width: 500;
+    -fx-background-color: #242526;
+    -fx-background-radius: 8px;
+}
+
+#userResultLabel {
+    -fx-pref-width: 500;
+    -fx-text-fill: white;
+}
+
+#suggestionItem:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+}
+
+#suggestionItem:focused {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+}

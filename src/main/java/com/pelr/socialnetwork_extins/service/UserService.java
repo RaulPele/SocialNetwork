@@ -109,6 +109,14 @@ public class UserService {
         throw new UserNotFoundException("User with specified email does not exist!");
     }
 
+    public String findEmailByUserName(String firstName, String lastName) {
+        User user = usersRepository.findUserByName(firstName, lastName);
+        if(user == null) {
+            return null;
+        }
+        return user.getEmail();
+    }
+
     public User findUserByEmail(String email){
         User user = usersRepository.findUserByEmail(email);
 

@@ -2,7 +2,9 @@ package com.pelr.socialnetwork_extins.controllers;
 
 import com.pelr.socialnetwork_extins.MainApplication;
 import com.pelr.socialnetwork_extins.SceneManager;
+import com.pelr.socialnetwork_extins.controls.AutoCompleteTextField;
 import com.pelr.socialnetwork_extins.domain.DTOs.ConversationHeaderDTO;
+import com.pelr.socialnetwork_extins.domain.User;
 import com.pelr.socialnetwork_extins.service.Controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -18,9 +20,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -52,6 +57,9 @@ public class HomePageController {
     @FXML
     private TextField contactsSearchTextField;
 
+    @FXML
+    private AutoCompleteTextField autoCompleteTextField;
+
     public void setController(Controller controller) {
         this.controller = controller;
     }
@@ -70,6 +78,7 @@ public class HomePageController {
         loadContactsList();
         contactsSearchTextField.textProperty().addListener(event -> handleContactsFilter());
         contacts.addListener((ListChangeListener<ConversationHeaderDTO>) c -> showFilteredContacts());
+        loadCustomSearchBar();
     }
 
     private void loadContactsList(){
@@ -100,6 +109,29 @@ public class HomePageController {
         }
 
         return null;
+    }
+
+    private void loadCustomSearchBar() {
+        List<User> users = new ArrayList<>();
+        controller.findAllUsers().forEach(users::add);
+        autoCompleteTextField.setUsers(users);
+        autoCompleteTextField.setOnKeyPressed(this::handleSearchBarOnKeyPressed);
+    }
+
+    private void handleSearchBarOnKeyPressed(KeyEvent keyEvent) {
+        if(keyEvent.getCode() == KeyCode.ENTER) {
+            String searchedName = autoCompleteTextField.getText();
+            if (searchedName.isEmpty() || searchedName.isBlank()) {
+                return;
+            }
+
+            String[] names = searchedName.split(" ");
+
+            if (names.length == 2) {
+                String email = controller.findEmailByUserName(names[0], names[1]);
+                changeToProfilePageScreen(email);
+            }
+        }
     }
 
     private void openChatRoomView(ConversationHeaderDTO header) {
@@ -181,8 +213,20 @@ public class HomePageController {
     private void handleContactsFilter() {
         String searchInput = contactsSearchTextField.getText().toLowerCase();
 
-        Predicate<ConversationHeaderDTO> nameStartsWith = contact -> contact.getReceiverFirstName().toLowerCase().startsWith(searchInput) ||
-                contact.getReceiverLastName().toLowerCase().startsWith(searchInput);
+        Predicate<ConversationHeaderDTO> nameStartsWith = contact -> {
+            String firstName = contact.getReceiverFirstName();
+            String lastName = contact.getReceiverLastName();
+            String fullName = firstName + " " + lastName;
+            String reverseFullName = lastName + " " + firstName;
+
+            String searchedName = contactsSearchTextField.getText();
+
+            return firstName.toLowerCase().startsWith(searchedName) ||
+                    lastName.toLowerCase().startsWith(searchedName) ||
+                    fullName.toLowerCase().startsWith(searchedName) ||
+                    reverseFullName.toLowerCase().startsWith(searchedName);
+
+        };
 
         List<ConversationHeaderDTO> headers = new ArrayList<>();
         controller.getConversationHeaders().forEach(headers::add);

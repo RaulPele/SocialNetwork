@@ -10,6 +10,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
+<!--<?import com.pelr.socialnetwork_extins.controls.AutoCompleteTextField?> -->
+<?import com.pelr.socialnetwork_extins.controls.AutoCompleteTextField?>
 <AnchorPane id="rootLayout" fx:id="rootLayout" prefHeight="700" prefWidth="1200" stylesheets="@../css/home_page_stylesheet.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pelr.socialnetwork_extins.controllers.HomePageController">
 
     
@@ -39,4 +41,7 @@
         </VBox>
     </ScrollPane>
 
+    <AutoCompleteTextField id="autoCompleteTextField" fx:id="autoCompleteTextField" layoutX="273.0" layoutY="29.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="26" prefWidth="500" promptText="Search...">
+
+    </AutoCompleteTextField>
 </AnchorPane>

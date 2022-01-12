@@ -397,6 +397,24 @@ public class Controller {
 
         return friends;
     }
+
+    public User findUserByName(String fullName){
+        String[] names = fullName.split(" ");
+        User user;
+
+        try {
+            user = userService.findUserByName(names[0], names[1]);
+        } catch (UserNotFoundException ex){
+            user = null;
+        }
+
+        return user;
+    }
+
+    public String findEmailByUserName(String firstName, String lastName) {
+       return userService.findEmailByUserName(firstName, lastName);
+    }
+
 }
 
 
