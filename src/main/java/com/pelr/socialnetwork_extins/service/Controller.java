@@ -444,6 +444,7 @@ public class Controller extends Observable {
 
     public void createEvent(String title, String description, String location, LocalDateTime date) {
         eventService.save(authentication.getLoggedUser(), title, description, date, location);
+        notifyHomePageController();
     }
 
     public Iterable<Event> findAllEvents() {

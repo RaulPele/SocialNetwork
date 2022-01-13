@@ -54,8 +54,8 @@ public class EventCardController implements Observer{
     public void initializeEvent(Event event) {
         this.event = event;
 
-        Image eventImage = new Image(String.valueOf(MainApplication.class.getResource("assets/unknown_user.png")));
-        // eventImageView.setImage(eventImage);
+        Image eventImage = new Image(String.valueOf(MainApplication.class.getResource("assets/concert.jpeg")));
+         eventImageView.setImage(eventImage);
         dateLabel.setText(event.getDate().getDayOfWeek() + ", " + event.getDate().getMonth() + " " + event.getDate().getDayOfMonth());
         titleLabel.setText(event.getTitle());
         locationLabel.setText(event.getLocation());
@@ -68,7 +68,7 @@ public class EventCardController implements Observer{
         }
 
         eventCardLayout.setOnMouseClicked(this::onEventCardClicked);
-        controller.addObserver(this);
+        //controller.addObserver(this);
     }
 
     public void onAttendButtonClicked(ActionEvent actionEvent) {
@@ -82,12 +82,15 @@ public class EventCardController implements Observer{
     private void cancelAttendingToEvent() {
         attendButton.setText("Attend");
         controller.cancelAttendingToEvent(event);
+        participantsNumberLabel.setText(event.getParticipants().size() + " people attending");
 
     }
 
     private void attendToEvent() {
         attendButton.setText("Attending");
         controller.attendToEvent(event);
+        participantsNumberLabel.setText(event.getParticipants().size() + " people attending");
+
     }
 
     private void onEventCardClicked(MouseEvent mouseEvent) {

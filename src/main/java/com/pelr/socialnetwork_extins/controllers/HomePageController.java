@@ -7,6 +7,7 @@ import com.pelr.socialnetwork_extins.domain.DTOs.ConversationHeaderDTO;
 import com.pelr.socialnetwork_extins.domain.Event;
 import com.pelr.socialnetwork_extins.domain.User;
 import com.pelr.socialnetwork_extins.service.Controller;
+import com.pelr.socialnetwork_extins.utils.Observer;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -35,7 +36,7 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class HomePageController {
+public class HomePageController implements Observer {
     private SceneManager sceneManager;
     private Controller controller;
 
@@ -65,6 +66,9 @@ public class HomePageController {
     @FXML
     private GridPane homeEventsGridPane;
 
+    @FXML
+    private Button createEventButton;
+
     public void setController(Controller controller) {
         this.controller = controller;
     }
@@ -85,6 +89,7 @@ public class HomePageController {
         contacts.addListener((ListChangeListener<ConversationHeaderDTO>) c -> showFilteredContacts());
         loadCustomSearchBar();
         loadEvents();
+        controller.addObserver(this);
     }
 
     private void loadContactsList(){
@@ -183,7 +188,6 @@ public class HomePageController {
             stage.centerOnScreen();
             stage.show();
 
-
             ChatRoomController chatRoomController = fxmlLoader.getController();
             chatRoomController.setController(controller);
             chatRoomController.initializeChatRoom(header.getReceiverEmail());
@@ -274,5 +278,34 @@ public class HomePageController {
     private void showFilteredContacts() {
         contactsListPane.getChildren().remove(2, contactsListPane.getChildren().size());
         contacts.forEach(contact -> contactsListPane.getChildren().add(createContactView(contact)));
+    }
+
+    public void onCreateEventButtonClicked(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource("fxml/create_event_page-view.fxml"));
+            Scene createEventScene = new Scene(loader.load());
+            Stage createEventStage = new Stage();
+            createEventStage.setScene(createEventScene);
+
+            CreateEventPageController createEventPageController = loader.getController();
+            createEventPageController.setController(controller);
+
+            createEventStage.show();
+            createEventStage.centerOnScreen();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void update() {
+        refreshEventsList();
+    }
+
+    private void refreshEventsList() {
+        homeEventsGridPane.getChildren().clear();
+        eventRowCount=0;
+        loadEvents();
     }
 }

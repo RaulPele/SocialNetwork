@@ -7,14 +7,13 @@
     -fx-background-radius: 30px;
 }
 
-#friendRequestsButton, #profileButton, #logoutButton {
+#friendRequestsButton, #profileButton, #logoutButton , #createEventButton {
     -fx-background-color: #1877f2;
     -fx-text-fill: white;
 }
 
 #friendRequestsButton:hover{
     -fx-background-color: #165be5;
-
 }
 
 #profileButton:hover {
@@ -22,6 +21,10 @@
 }
 
 #logoutButton:hover {
+    -fx-background-color: #165be5 ;
+}
+
+#createEventButton:hover {
     -fx-background-color: #165be5 ;
 }
 

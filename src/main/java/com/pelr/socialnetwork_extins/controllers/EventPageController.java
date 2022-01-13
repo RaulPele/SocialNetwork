@@ -1,5 +1,6 @@
 package com.pelr.socialnetwork_extins.controllers;
 
+import com.pelr.socialnetwork_extins.MainApplication;
 import com.pelr.socialnetwork_extins.SceneManager;
 import com.pelr.socialnetwork_extins.domain.Event;
 import com.pelr.socialnetwork_extins.service.Controller;
@@ -8,6 +9,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
@@ -42,6 +45,9 @@ public class EventPageController implements Observer {
     private Button homeButton;
 
     @FXML
+    private ImageView eventImageView;
+
+    @FXML
     private Button attendButton;
 
     public void setSceneManager(SceneManager sceneManager) {
@@ -60,9 +66,12 @@ public class EventPageController implements Observer {
         locationLabel.setText(event.getLocation());
         numberOfParticipantsLabel.setText(event.getParticipants().size() + " people attending");
 
-        creatorNameLabel.setText(event.getCreator().getFirstName() + " " + event.getCreator().getLastName());
+        creatorNameLabel.setText("Event created by: " + event.getCreator().getFirstName() + " " + event.getCreator().getLastName());
         detailsLocationLabel.setText(event.getLocation());
         descriptionLabel.setText(event.getDescription());
+
+        Image image = new Image(String.valueOf(MainApplication.class.getResource("assets/concert.jpeg")));
+        eventImageView.setImage(image);
 
         if(event.isAttending(controller.getLoggedUser())) {
             attendButton.setText("Attending");

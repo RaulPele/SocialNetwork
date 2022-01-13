@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="rootLayout" prefHeight="355.0" prefWidth="342.0" stylesheets="@../css/create_event_page_stylesheet.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pelr.socialnetwork_extins.controllers.CreateEventPageController">
+   <children>
+      <TextField id="titleTextField" fx:id="titleTextField" layoutX="53.0" layoutY="24.0" prefWidth="235.0" promptText="Title" />
+      <TextField id="locationTextField" fx:id="locationTextField" layoutX="53.0" layoutY="73.0" prefWidth="235.0" promptText="Location" />
+      <DatePicker id="datePicker" fx:id="datePicker" layoutX="53.0" layoutY="124.0" prefHeight="26.0" prefWidth="122.0" />
+      <TextField id="timeTextField" fx:id="timeTextField" layoutX="183.0" layoutY="124.0" prefWidth="105.0" promptText="Time" />
+      <TextArea id="descriptionTextArea" fx:id="descriptionTextArea" layoutX="53.0" layoutY="178.0" prefHeight="106.0" prefWidth="235.0" promptText="Description" />
+      <Button id="createEventButton" fx:id="createEventButton" layoutX="108.0" layoutY="303.0" mnemonicParsing="false" onAction="#onCreateEventButtonClicked" prefHeight="32.0" prefWidth="122.0" text="Create event" />
+   </children>
+</AnchorPane>

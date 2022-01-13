@@ -10,7 +10,7 @@
 
 <AnchorPane id="rootLayout" fx:id="rootLayout" prefHeight="687.0" prefWidth="779.0" stylesheets="@../css/event_page_stylesheet.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pelr.socialnetwork_extins.controllers.EventPageController">
    <children>
-      <ImageView id="eventImage" fx:id="eventImage" fitHeight="207.0" fitWidth="396.0" layoutX="180.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView id="eventImage" fx:id="eventImageView" fitHeight="207.0" fitWidth="396.0" layoutX="180.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true" />
       <Label id="dateLabel" fx:id="dateLabel" layoutX="200.0" layoutY="254.0" text="Sunday, Januray 9 at 17:00" />
       <Label id="titleLabel" fx:id="titleLabel" layoutX="200.0" layoutY="280.0" text="Electric Castle">
          <font>

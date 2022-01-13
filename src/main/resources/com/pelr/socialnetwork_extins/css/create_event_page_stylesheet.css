@@ -1,0 +1,74 @@
+#rootLayout {
+    -fx-background-color: #242526;
+}
+
+#titleTextField, #locationTextField, #timeTextField{
+    -fx-background-color: transparent;
+    -fx-border-width: 1px;
+    -fx-border-color: rgba(255, 255, 255, 0.1);
+    -fx-pref-height: 40;
+    -fx-border-radius: 8px;
+    -fx-text-fill: white;
+}
+
+#datePicker {
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-background-color: #242526;
+    -fx-border-width: 1px;
+    -fx-border-color: rgba(255, 255, 255, 0.1);
+    -fx-pref-height: 40;
+}
+#datePicker .text-field  {
+    -fx-border-radius: 7px;
+    -fx-background-radius: 7px;
+    -fx-border-color: rgba(255, 255, 255, 0.1);
+    -fx-background-color: #242526;
+    -fx-text-fill: white;
+
+}
+
+#datePicker .arrow-button {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-background-radius: 0;
+
+}
+
+#datePicker .arrow-button .arrow {
+    -fx-background-color: white;
+}
+
+#datePicker .cell {
+    -fx-background-color: white;
+}
+
+#descriptionTextArea .content{
+    -fx-background-color: #242526;
+    -fx-background-radius: 8px;
+    -fx-text-fill: white;
+}
+
+#descriptionTextArea .scroll-pane .viewport{
+    -fx-background-color: transparent;
+    -fx-background-radius: 8px;
+}
+
+#descriptionTextArea {
+    -fx-background-color: #242526;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-border-color: rgba(255, 255, 255, 0.1);
+    -fx-wrap-text: true;
+    -fx-min-height: 70px;
+    -fx-text-fill: white;
+}
+
+#createEventButton {
+    -fx-background-color: #1877f2;
+    -fx-text-fill: white;
+}
+
+#createEventButton:hover {
+    -fx-background-color: #165be5;
+
+}

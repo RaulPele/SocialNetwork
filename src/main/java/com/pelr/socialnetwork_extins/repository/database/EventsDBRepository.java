@@ -38,7 +38,7 @@ public class EventsDBRepository implements Repository<Long, Event> {
             addStatement.setString(4, entity.getLocation());
             addStatement.setTimestamp(5, Timestamp.valueOf(entity.getDate()));
 
-            addStatement.executeQuery();
+            addStatement.executeUpdate();
 
         } catch (SQLException e) {
             throw new RepositoryException("Events database save error!\n" + e.getMessage());
