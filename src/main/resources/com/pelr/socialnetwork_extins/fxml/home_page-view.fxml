@@ -8,13 +8,13 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.VBox?>
 
-<!--<?import com.pelr.socialnetwork_extins.controls.AutoCompleteTextField?> -->
 <?import com.pelr.socialnetwork_extins.controls.AutoCompleteTextField?>
-<AnchorPane id="rootLayout" fx:id="rootLayout" prefHeight="700" prefWidth="1200" stylesheets="@../css/home_page_stylesheet.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pelr.socialnetwork_extins.controllers.HomePageController">
 
-    
+<AnchorPane id="rootLayout" fx:id="rootLayout" prefHeight="700" prefWidth="1200" stylesheets="@../css/home_page_stylesheet.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pelr.socialnetwork_extins.controllers.HomePageController">
 
     <Button id="friendRequestsButton" fx:id="friendRequestsButton" layoutX="42.0" layoutY="324.0" mnemonicParsing="false" onAction="#onFriendRequestsButtonClicked" prefHeight="33.0" prefWidth="140.0" text="Friend Requests" />
     <Button id="profileButton" fx:id="profileButton" layoutX="42.0" layoutY="367.0" mnemonicParsing="false" onAction="#onProfileButtonClicked" prefHeight="33.0" prefWidth="140.0" text="My Profile" />
@@ -44,4 +44,16 @@
     <AutoCompleteTextField id="autoCompleteTextField" fx:id="autoCompleteTextField" layoutX="273.0" layoutY="29.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="26" prefWidth="500" promptText="Search...">
 
     </AutoCompleteTextField>
+   <ScrollPane id="homeEventsScrollPane" fx:id="homeEventsScrollPane" hbarPolicy="NEVER" layoutX="290.0" layoutY="117.0" prefHeight="570.0" prefWidth="500.0">
+      <content>
+         <GridPane id="homeEventsGridPane" fx:id="homeEventsGridPane" alignment="TOP_CENTER" prefHeight="568.0" prefWidth="498.0">
+           <columnConstraints>
+             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+           </columnConstraints>
+            <padding>
+               <Insets bottom="5.0" left="5.0" right="5.0" top="7.0" />
+            </padding>
+         </GridPane>
+      </content>
+   </ScrollPane>
 </AnchorPane>

@@ -5,6 +5,7 @@ import com.pelr.socialnetwork_extins.domain.Graph;
 import com.pelr.socialnetwork_extins.domain.Status;
 import com.pelr.socialnetwork_extins.domain.Tuple;
 import com.pelr.socialnetwork_extins.repository.Repository;
+import com.pelr.socialnetwork_extins.utils.Observable;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -83,7 +84,6 @@ public class FriendshipService {
         return savedFriendship;
     }
 
-
     /**
      * Removes a friendship between two users.
      * @param userID1 - ID of a user
@@ -102,7 +102,6 @@ public class FriendshipService {
         if(removedFriendship == null){
             throw new FriendshipException("Friendship not found!");
         }
-
         return removedFriendship;
     }
 
@@ -112,6 +111,10 @@ public class FriendshipService {
      */
     public Iterable<Friendship> findAll(){
         return friendshipRepository.findAll();
+    }
+
+    public Friendship findRequest(Long senderId, Long receiverId) {
+        return friendshipRepository.findOne(new Tuple<Long, Long>(senderId, receiverId));
     }
 
     public void removeAllContaining(Long userID){
@@ -129,12 +132,14 @@ public class FriendshipService {
         Iterable<Friendship> friendships = friendshipRepository.findAll();
 
         friendships.forEach(friendship ->{
-            Tuple<Long, Long> friendshipID = friendship.getID();
+            if(friendship.getStatus().equals(Status.APPROVED)) {
+                Tuple<Long, Long> friendshipID = friendship.getID();
 
-            if(friendshipID.getLeft().equals(userID)){
-                friendsIDs.add(friendshipID.getRight());
-            } else if(friendshipID.getRight().equals(userID)) {
-                friendsIDs.add(friendshipID.getLeft());
+                if (friendshipID.getLeft().equals(userID)) {
+                    friendsIDs.add(friendshipID.getRight());
+                } else if (friendshipID.getRight().equals(userID)) {
+                    friendsIDs.add(friendshipID.getLeft());
+                }
             }
         });
 
@@ -213,5 +218,41 @@ public class FriendshipService {
                 .collect(Collectors.toList());
 
         return friendshipsFromDate;
+    }
+
+    public boolean areFriends(Long userId1, Long userId2) {
+        Friendship friendship = findRequest(userId1, userId2);
+        if(friendship!= null) {
+            return friendship.getStatus().equals(Status.APPROVED);
+        }
+
+        friendship = findRequest(userId2, userId1);
+        if(friendship != null) {
+            return friendship.getStatus().equals(Status.APPROVED);
+
+        }
+        return false;
+    }
+
+    public boolean requestIsRejected(Long userId1, Long userId2) {
+        Friendship friendship = findRequest(userId1, userId2);
+        if(friendship != null ) {
+            return friendship.getStatus().equals(Status.REJECTED);
+        }
+        return false;
+    }
+
+    public boolean hasIncomingFriendRequest(Long userId, Long requestSenderId) {
+        Friendship request = findRequest(requestSenderId, userId);
+
+        if(request != null) {
+            return request.getStatus().equals(Status.PENDING);
+        }
+
+        return false;
+    }
+
+    public boolean hasOutgoingFriendRequest(Long senderId, Long receiverId) {
+        return hasIncomingFriendRequest(receiverId, senderId);
     }
 }

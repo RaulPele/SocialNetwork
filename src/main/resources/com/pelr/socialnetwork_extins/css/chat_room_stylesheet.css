@@ -1,3 +1,7 @@
+#rootLayout {
+    -fx-background-color: #1c1e21;
+}
+
 #chatRoomHeaderPane {
     -fx-background-color: #1c1e21;
 }

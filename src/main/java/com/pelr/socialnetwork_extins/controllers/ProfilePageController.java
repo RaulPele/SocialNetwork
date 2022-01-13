@@ -5,6 +5,7 @@ import com.pelr.socialnetwork_extins.SceneManager;
 import com.pelr.socialnetwork_extins.domain.Page;
 import com.pelr.socialnetwork_extins.domain.User;
 import com.pelr.socialnetwork_extins.service.Controller;
+import com.pelr.socialnetwork_extins.utils.Observer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,7 +23,7 @@ import javafx.scene.shape.Rectangle;
 import java.io.IOException;
 import java.util.List;
 
-public class ProfilePageController {
+public class ProfilePageController implements Observer {
     private Controller controller;
     private SceneManager sceneManager;
     private Page profilePage;
@@ -58,15 +59,13 @@ public class ProfilePageController {
     }
 
     public void initializeProfile(String email) {
+        controller.addObserver(this);
         profilePage = controller.createProfilePage(email);
         User profileOwner = profilePage.getProfileOwner();
 
         profileNameLabel.setText(profileOwner.getFirstName() + " " + profileOwner.getLastName());
 
-        if(profileOwner.getEmail().equals(controller.getLoggedUser().getEmail())) {
-            rootLayout.getChildren().remove(requestButton);
-           // requestButton.setVisible(false);
-        }
+        loadRequestButton();
 
         profilePictureImageView.setImage(new Image(String.valueOf(MainApplication.class.getResource("assets/unknown_user.png"))));
 
@@ -146,5 +145,66 @@ public class ProfilePageController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void loadRequestButton() {
+        User profileOwner = profilePage.getProfileOwner();
+
+        if(profileOwner.getEmail().equals(controller.getLoggedUser().getEmail())) {
+            rootLayout.getChildren().remove(requestButton);
+            // requestButton.setVisible(false);
+        }else if(controller.isFriend(profileOwner.getEmail())) {
+            requestButton.setText("Unfriend");
+            requestButton.setOnAction(this::onUnfriendButtonClicked);
+        } else if(controller.requestIsRejected(profileOwner.getEmail())){
+            requestButton.setText("Your request was rejected.");
+            requestButton.setDisable(true);
+        } else if(controller.hasIncomingFriendRequest(profileOwner.getEmail())){
+            requestButton.setText("Accept friend request");
+            requestButton.setOnAction(this::onAcceptRequestButtonClicked);
+        } else if(controller.hasOutgoingFriendRequest(profileOwner.getEmail())) {
+            requestButton.setText("Unsend friend request");
+            requestButton.setOnAction(this::onUnsendButtonClicked);
+        } else{
+            requestButton.setText("Add friend");
+            requestButton.setOnAction(this::onAddFriendButtonClicked);
+        }
+    }
+
+    private void onUnfriendButtonClicked(ActionEvent actionEvent) {
+        controller.removeFriendship(profilePage.getProfileOwner().getEmail());
+        requestButton.setText("Add friend");
+        requestButton.setOnAction(this::onAddFriendButtonClicked);
+    }
+
+    private void onAcceptRequestButtonClicked(ActionEvent actionEvent) {
+        controller.acceptFriendRequest(profilePage.getProfileOwner().getEmail());
+        requestButton.setText("Unfriend");
+        requestButton.setOnAction(this::onUnfriendButtonClicked);
+        //addFriendItemToLayout(createFriendItemView(controller.getLoggedUser()));
+    }
+
+    private void onUnsendButtonClicked(ActionEvent actionEvent) {
+        controller.unsendFriendRequest(profilePage.getProfileOwner().getEmail());
+        requestButton.setText("Add friend");
+        requestButton.setOnAction(this::onAddFriendButtonClicked);
+    }
+
+    private void onAddFriendButtonClicked(ActionEvent actionEvent) {
+        controller.sendFriendRequest(profilePage.getProfileOwner().getEmail());
+        requestButton.setText("Unsend friend request");
+        requestButton.setOnAction(this::onUnsendButtonClicked);
+    }
+
+    private void reloadFriendList() {
+        profilePage.setFriendList(controller.getFriends(profilePage.getProfileOwner().getEmail()));
+        friendsGridPane.getChildren().clear();
+        columnCount = rowCount=0;
+        loadFriendList();
+    }
+
+    @Override
+    public void update() {
+        reloadFriendList();
     }
 }

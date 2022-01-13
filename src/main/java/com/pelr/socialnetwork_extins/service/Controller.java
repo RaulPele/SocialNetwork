@@ -1,15 +1,13 @@
 package com.pelr.socialnetwork_extins.service;
 
 
+import com.pelr.socialnetwork_extins.domain.*;
 import com.pelr.socialnetwork_extins.domain.DTOs.FriendRequestDTO;
 import com.pelr.socialnetwork_extins.domain.DTOs.FriendshipDTO;
 
 import com.pelr.socialnetwork_extins.domain.DTOs.ConversationHeaderDTO;
 
-import com.pelr.socialnetwork_extins.domain.Friendship;
-import com.pelr.socialnetwork_extins.domain.Graph;
-import com.pelr.socialnetwork_extins.domain.Page;
-import com.pelr.socialnetwork_extins.domain.User;
+import com.pelr.socialnetwork_extins.utils.Observable;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -21,11 +19,12 @@ import java.util.stream.StreamSupport;
 /**
  * Controller class that manages application services.
  */
-public class Controller {
+public class Controller extends Observable {
     private UserService userService;
     private FriendshipService friendshipService;
     private Authentication authentication;
     private MessagingService messagingService;
+    private EventService eventService;
 
     /**
      * Creates a controller containing multiple services.
@@ -35,11 +34,12 @@ public class Controller {
      * @param friendshipService - friendship service used by the controller
      * @param authentication    - authentication service used by the controller
      */
-    public Controller(UserService userService, FriendshipService friendshipService, Authentication authentication, MessagingService messagingService) {
+    public Controller(UserService userService, FriendshipService friendshipService, Authentication authentication, MessagingService messagingService, EventService eventService) {
         this.userService = userService;
         this.friendshipService = friendshipService;
         this.authentication = authentication;
         this.messagingService = messagingService;
+        this.eventService = eventService;
     }
 
     /**
@@ -127,7 +127,7 @@ public class Controller {
      *
      * @param friendEmail - email of the specified user
      */
-    public void saveFriendship(String friendEmail){
+    public void sendFriendRequest(String friendEmail){
         User loggedUser = authentication.getLoggedUser();
         friendshipService.save(loggedUser.getID(), userService.findIDByUserEmail(friendEmail));
     }
@@ -140,6 +140,7 @@ public class Controller {
     public void removeFriendship(String friendEmail) {
         User loggedUser = authentication.getLoggedUser();
         friendshipService.remove(loggedUser.getID(), userService.findIDByUserEmail(friendEmail));
+        notifyObservers();
     }
 
     /**
@@ -345,14 +346,15 @@ public class Controller {
         Long friendID = userService.findIDByUserEmail(friendEmail);
         Long loggedUserID = authentication.getLoggedUser().getID();
 
-        friendshipService.declineFriendRequest(friendID, loggedUserID);
+        friendshipService.acceptFriendRequest(friendID, loggedUserID);
+        notifyObservers();
     }
 
     public void declineFriendRequest(String friendEmail) {
         Long friendID = userService.findIDByUserEmail(friendEmail);
         Long loggedUserID = authentication.getLoggedUser().getID();
 
-        friendshipService.acceptFriendRequest(friendID, loggedUserID);
+        friendshipService.declineFriendRequest(friendID, loggedUserID);
     }
 
     public Iterable<FriendshipDTO> getFriendshipsFromDate(int year, String month) {
@@ -415,6 +417,48 @@ public class Controller {
        return userService.findEmailByUserName(firstName, lastName);
     }
 
+    public boolean isFriend(String userEmail) {
+        Long userId = userService.findIDByUserEmail(userEmail);
+
+        return friendshipService.areFriends(authentication.getLoggedUser().getID(), userId);
+    }
+
+    public boolean requestIsRejected(String userEmail) {
+        Long userId = userService.findIDByUserEmail(userEmail);
+        return friendshipService.requestIsRejected(authentication.getLoggedUser().getID(), userId);
+    }
+
+    public boolean hasIncomingFriendRequest(String userEmail) {
+        Long requestSenderId = userService.findIDByUserEmail(userEmail);
+        return friendshipService.hasIncomingFriendRequest(authentication.getLoggedUser().getID(), requestSenderId);
+    }
+
+    public boolean hasOutgoingFriendRequest(String userEmail) {
+        Long requestReceiverId = userService.findIDByUserEmail(userEmail);
+        return friendshipService.hasOutgoingFriendRequest(authentication.getLoggedUser().getID(), requestReceiverId);
+    }
+
+    public void unsendFriendRequest(String userEmail) {
+        removeFriendship(userEmail);
+    }
+
+    public void createEvent(String title, String description, String location, LocalDateTime date) {
+        eventService.save(authentication.getLoggedUser(), title, description, date, location);
+    }
+
+    public Iterable<Event> findAllEvents() {
+        return eventService.findAll();
+    }
+
+    public void attendToEvent(Event event) {
+        eventService.attendToEvent(authentication.getLoggedUser(), event);
+        notifyEventControllerObservers();
+    }
+
+    public void cancelAttendingToEvent(Event event) {
+        eventService.cancelAttendingToEvent(authentication.getLoggedUser(), event);
+        notifyEventControllerObservers();
+    }
 }
 
 

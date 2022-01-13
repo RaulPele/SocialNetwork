@@ -81,4 +81,8 @@ public class ChatRoom {
         messageReceivers.add(receivers.get(0));
         messagingService.save(sender, messageReceivers, message, null);
     }
+
+    public Message getLastMessage() {
+        return messagingService.getLastMessageBetween(sender.getID(), getReceiver().getID());
+    }
 }

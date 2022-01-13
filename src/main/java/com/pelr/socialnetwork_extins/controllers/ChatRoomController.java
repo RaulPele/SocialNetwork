@@ -9,16 +9,10 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 
 import java.util.List;
 
@@ -74,6 +68,7 @@ public class ChatRoomController {
         contactHeaderImageView.setImage(new Image(String.valueOf(MainApplication.class.getResource("assets/unknown_user.png"))));
 
         messagesPane.heightProperty().addListener((observable, oldValue, newValue) -> messagesScrollPane.setVvalue((Double) newValue));
+
     }
 
     private void loadMessages() {
@@ -93,7 +88,7 @@ public class ChatRoomController {
         }
 
         messagesRowCount++;
-        messagesPane.addRow(messagesRowCount);
+       // messagesPane.addRow(messagesRowCount);
     }
 
     private Node createMessageView(Message message) {
@@ -103,7 +98,6 @@ public class ChatRoomController {
         Label messageLabel = new Label(message.getMessage());
 
         messageBox.getChildren().add(messageLabel);
-        messageBox.getChildren().add(buttonsBox);
 
         messageBox.setSpacing(5);
         buttonsBox.setSpacing(3);
@@ -123,7 +117,8 @@ public class ChatRoomController {
             return;
         }
         chatRoom.reply(replyMessage, replyTo.getID());
-        refreshScreen();
+        //refreshScreen();
+        addMessageToLayout(chatRoom.getLastMessage());
         messageTextField.clear();
 
     }
@@ -134,7 +129,8 @@ public class ChatRoomController {
             return;
         }
         chatRoom.replyToAll(replyMessage, replyTo.getID());
-        refreshScreen();
+        //refreshScreen();
+        addMessageToLayout(chatRoom.getLastMessage());
         messageTextField.clear();
     }
 
@@ -145,9 +141,9 @@ public class ChatRoomController {
         }
 
         chatRoom.send(messageString);
-        refreshScreen();
+        //refreshScreen();
+        addMessageToLayout(chatRoom.getLastMessage());
         messageTextField.clear();
-
     }
 
     private void refreshScreen() {
@@ -164,7 +160,8 @@ public class ChatRoomController {
 
         try {
             chatRoom.sendToMultipleUsers(messageString, userNames);
-            refreshScreen();
+            //refreshScreen();
+            addMessageToLayout(chatRoom.getLastMessage());
             messageTextField.clear();
         } catch (Exception ex) {
             userListTextField.setText("Invalid list of users!");

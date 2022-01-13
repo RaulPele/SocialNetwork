@@ -13,7 +13,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class FriendshipDBRepository implements Repository<Tuple<Long, Long>, Friendship> {
-
     private String url;
     private String username;
     private String password;

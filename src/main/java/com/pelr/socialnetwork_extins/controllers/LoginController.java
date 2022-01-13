@@ -1,6 +1,7 @@
 package com.pelr.socialnetwork_extins.controllers;
 
 import com.pelr.socialnetwork_extins.SceneManager;
+import com.pelr.socialnetwork_extins.domain.Event;
 import com.pelr.socialnetwork_extins.service.Controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,6 +11,10 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.Month;
 
 public class LoginController {
 
@@ -68,6 +73,14 @@ public class LoginController {
             controller.login(email, password);
             //System.out.println("Logged in successfuly!");
             changeToHomePageScreen();
+
+            //event testing
+//            LocalDate date = LocalDate.of(2021, Month.JANUARY, 18);
+//            LocalTime time = LocalTime.of(14, 0);
+//            LocalDateTime dateTime = LocalDateTime.of(date, time);
+            //Event event = new Event(controller.getLoggedUser(), "Electric Castle", "Festival de muzica distractia", "Bontida, castel banfy", dateTime);
+            //controller.createEvent(event.getTitle(), event.getDescription(), event.getLocation(), event.getDate());
+            //controller.findAllEvents().forEach(a -> System.out.println(a.toString()));
         } catch (Exception e) {
             errorLabel.setVisible(true);
             errorLabel.setText("Invalid email or password!");

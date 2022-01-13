@@ -1,5 +1,7 @@
 package com.pelr.socialnetwork_extins.domain;
 
+import com.pelr.socialnetwork_extins.utils.Observer;
+
 import java.util.List;
 
 public class Page {
@@ -25,4 +27,5 @@ public class Page {
     public void setFriendList(List<User> friendList) {
         this.friendList = friendList;
     }
+
 }

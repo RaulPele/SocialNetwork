@@ -40,4 +40,8 @@ public class MessagingService {
     public List<Long> getAllReceiversOfMessage(Long messageID) {
         return messagesRepository.getAllReceiversOfMessage(messageID);
     }
+
+    public Message getLastMessageBetween(Long userId1, Long userId2) {
+        return messagesRepository.getLastMessageBetween(userId1, userId2);
+    }
 }

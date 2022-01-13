@@ -16,6 +16,11 @@
 #requestButton {
     -fx-background-color: #1877f2;
     -fx-text-fill: white;
+    -fx-wrap-text: true;
+    -fx-prefHeight:37;
+    -fx-prefWidth:135;
+    -fx-min-height: 37;
+    -fx-min-width: 135;
 }
 
 #requestButton:hover {

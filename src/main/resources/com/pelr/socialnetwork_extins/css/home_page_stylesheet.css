@@ -61,3 +61,38 @@
 #suggestionItem:focused {
     -fx-background-color: rgba(255, 255, 255, 0.1);
 }
+
+#homeEventsScrollPane {
+    -fx-background-color: transparent;
+}
+
+#homeEventsScrollPane .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-background-radius: 2em;
+}
+#homeEventsScrollPane .scroll-bar:vertical  .track{
+    -fx-background-color: transparent;
+    -fx-background-radius: 2em;
+}
+
+#homeEventsScrollPane .scroll-bar:vertical .thumb{
+    -fx-background-radius: 2em;
+
+}
+
+#homeEventsScrollPane .scroll-bar:vertical .increment-button,
+#homeEventsScrollPane .scroll-bar:vertical .decrement-button{
+    -fx-background-color :transparent;
+    -fx-background-radius : 0.0em;
+    -fx-padding :0.0 5px 0.0 0.0;
+}
+
+#homeEventsScrollPane .scroll-bar:vertical .increment-arrow,
+#homeEventsScrollPane .scroll-bar:vertical .decrement-arrow{
+    -fx-shape : " ";
+}
+
+#homeEventsGridPane {
+    -fx-background-color: #1c1e21;
+}
+
