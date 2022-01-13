@@ -1,6 +1,7 @@
 package com.pelr.socialnetwork_extins.controllers;
 
 import com.pelr.socialnetwork_extins.MainApplication;
+import com.pelr.socialnetwork_extins.SceneManager;
 import com.pelr.socialnetwork_extins.domain.Event;
 import com.pelr.socialnetwork_extins.service.Controller;
 import com.pelr.socialnetwork_extins.utils.Observer;
@@ -10,10 +11,18 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
+
+import java.io.IOException;
 
 public class EventCardController implements Observer{
     private Controller controller;
     private Event event;
+    private SceneManager sceneManager;
+
+    @FXML
+    private VBox eventCardLayout;
 
     @FXML
     private Button attendButton;
@@ -38,6 +47,10 @@ public class EventCardController implements Observer{
         this.controller = controller;
     }
 
+    public void setSceneManager(SceneManager sceneManager) {
+        this.sceneManager = sceneManager;
+    }
+
     public void initializeEvent(Event event) {
         this.event = event;
 
@@ -54,6 +67,7 @@ public class EventCardController implements Observer{
             attendButton.setText("Attend");
         }
 
+        eventCardLayout.setOnMouseClicked(this::onEventCardClicked);
         controller.addObserver(this);
     }
 
@@ -74,6 +88,23 @@ public class EventCardController implements Observer{
     private void attendToEvent() {
         attendButton.setText("Attending");
         controller.attendToEvent(event);
+    }
+
+    private void onEventCardClicked(MouseEvent mouseEvent) {
+        changeToEventPageScreen();
+    }
+
+    private void changeToEventPageScreen() {
+        try{
+            sceneManager.changeToEventPageScene();
+            sceneManager.centerStageOnScreen();
+            EventPageController eventPageController = sceneManager.getEventPageController();
+            eventPageController.setSceneManager(sceneManager);
+            eventPageController.setController(controller);
+            eventPageController.initializeEventPage(event);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

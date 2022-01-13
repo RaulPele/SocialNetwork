@@ -155,6 +155,7 @@ public class HomePageController {
             Node eventCardView = fxmlLoader.load();
             EventCardController eventCardController = fxmlLoader.getController();
             eventCardController.setController(controller);
+            eventCardController.setSceneManager(sceneManager);
             eventCardController.initializeEvent(event);
 
             return eventCardView;

@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Event extends Entity<Long>{
+public class Event extends Entity<Long> {
     private User creator;
     private String title;
     private String description;

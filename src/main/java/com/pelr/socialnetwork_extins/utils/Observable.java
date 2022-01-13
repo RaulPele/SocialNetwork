@@ -1,6 +1,7 @@
 package com.pelr.socialnetwork_extins.utils;
 
 import com.pelr.socialnetwork_extins.controllers.EventCardController;
+import com.pelr.socialnetwork_extins.controllers.EventPageController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,7 @@ public abstract class Observable {
 
     public void notifyEventControllerObservers() {
         observers.forEach(observer -> {
-            if(observer instanceof EventCardController)  {
+            if(observer instanceof EventCardController || observer instanceof EventPageController)  {
                 observer.update();
             }
         });
