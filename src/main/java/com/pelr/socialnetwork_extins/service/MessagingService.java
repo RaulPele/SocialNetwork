@@ -6,7 +6,10 @@ import com.pelr.socialnetwork_extins.domain.User;
 import com.pelr.socialnetwork_extins.repository.Repository;
 import com.pelr.socialnetwork_extins.repository.database.MessageDBRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 public class MessagingService {
     private MessageDBRepository messagesRepository;
@@ -43,5 +46,20 @@ public class MessagingService {
 
     public Message getLastMessageBetween(Long userId1, Long userId2) {
         return messagesRepository.getLastMessageBetween(userId1, userId2);
+    }
+
+    public List<Message> getMessagesReceivedBetween(Long userID, LocalDateTime startDate, LocalDateTime endDate) {
+        return messagesRepository.getMessagesReceivedBetween(userID, startDate, endDate);
+    }
+
+    public List<Message> getMessagesReceivedFrom(Long userID, Long senderID, LocalDateTime startDate, LocalDateTime endDate) {
+        Iterable<Message> allMessages = getMessagesSortedByDateBetween(userID, senderID);
+        List<Message> receivedMessages = StreamSupport.stream(allMessages.spliterator(), false)
+                .filter(message -> message.getFrom().getID().equals( senderID))
+                .filter(message -> message.getDate().isAfter(startDate) || message.getDate().equals(startDate))
+                .filter(message -> message.getDate().isBefore(endDate) || message.getDate().equals(endDate))
+                .collect(Collectors.toList());
+
+        return receivedMessages;
     }
 }

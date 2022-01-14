@@ -306,5 +306,39 @@ public class MessageDBRepository implements Repository<Long, Message> {
     public Message update(Message entity) {
         return null;
     }
+
+    public List<Message> getMessagesReceivedBetween(Long userID, LocalDateTime startTime, LocalDateTime endTime) {
+        String getSql = "SELECT sentMessage.id AS message_id, m.from_user_id AS sender_id,\n" +
+                "sender.first_name AS sender_first_name, sender.last_name AS sender_last_name,\n" +
+                "sender.email AS sender_email,\n" +
+                "sentMessage.to_user_id AS receiver_id, receiver.first_name AS receiver_first_name, receiver.last_name AS receiver_last_name,\n" +
+                "receiver.email AS receiver_email,\n" +
+                "m.message, m.replied_to_id, m.date\n" +
+                "FROM \"SentMessages\" sentMessage\n" +
+                "INNER JOIN \"Messages\" m on m.id = sentMessage.message_id\n" +
+                "INNER JOIN \"Users\" sender on sender.id = m.from_user_id\n" +
+                "INNER JOIN \"Users\" receiver on receiver.id = sentMessage.to_user_id\n" +
+                "WHERE sentMessage.to_user_id = ? AND m.date BETWEEN ? and ?";
+
+        List<Message> messages = new ArrayList<>();
+
+        try(Connection connection = DriverManager.getConnection(url, username, password);
+            PreparedStatement getStatement = connection.prepareStatement(getSql)) {
+
+            getStatement.setLong(1, userID);
+            getStatement.setTimestamp(2, Timestamp.valueOf(startTime));
+            getStatement.setTimestamp(3, Timestamp.valueOf(endTime));
+
+            ResultSet resultSet = getStatement.executeQuery();
+
+            while(resultSet.next()){
+                messages.add(getMessageFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new RepositoryException("Get messages received between database error!\n" + e.getMessage());
+        }
+
+        return messages;
+    }
 }
 

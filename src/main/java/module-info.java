@@ -6,6 +6,7 @@ module com.pelr.socialnetwork_extins {
     requires com.dlsc.formsfx;
     requires org.kordamp.bootstrapfx.core;
     requires java.sql;
+    requires org.apache.pdfbox;
 
     opens com.pelr.socialnetwork_extins to javafx.fxml;
     exports com.pelr.socialnetwork_extins;
