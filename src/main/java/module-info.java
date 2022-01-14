@@ -12,5 +12,6 @@ module com.pelr.socialnetwork_extins {
     exports com.pelr.socialnetwork_extins;
     exports com.pelr.socialnetwork_extins.controllers;
     exports com.pelr.socialnetwork_extins.controls to javafx.fxml;
+    exports com.pelr.socialnetwork_extins.service to javafx.fxml;
     opens com.pelr.socialnetwork_extins.controllers to javafx.fxml;
 }

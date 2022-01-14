@@ -527,6 +527,10 @@ public class Controller extends Observable {
         return report;
     }
 
+    public Iterable<Event> getAttendingEvents(){
+        return eventService.getAttendingEvents(authentication.getLoggedUser().getID());
+    }
+
 }
 
 

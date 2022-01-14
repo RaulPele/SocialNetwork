@@ -25,6 +25,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -40,6 +41,7 @@ import java.util.stream.StreamSupport;
 public class HomePageController implements Observer {
     private SceneManager sceneManager;
     private Controller controller;
+    private int notificationCounter =0;
 
     private ObservableList<ConversationHeaderDTO> contacts;
 
@@ -66,6 +68,13 @@ public class HomePageController implements Observer {
 
     @FXML
     private GridPane homeEventsGridPane;
+
+    @FXML
+    private VBox notificationsVBox;
+
+    @FXML
+    private Label notificationsNumberLabel;
+
 
     @FXML
     private Button createEventButton;
@@ -331,5 +340,53 @@ public class HomePageController implements Observer {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void receiveNotification(String notificationString) {
+        addNotificationView(notificationString);
+        notificationCounter++;
+        updateNotificationCounterLabel();
+    }
+
+    private void addNotificationView(String notificationString) {
+        Label notificationLabel = createNotificationView(notificationString);
+        notificationsVBox.getChildren().add(notificationLabel);
+    }
+
+    private Label createNotificationView(String notificationString) {
+        Label notificationLabel = new Label(notificationString);
+        notificationLabel.setId("notificationLabel");
+        return notificationLabel;
+    }
+
+    private void updateNotificationCounterLabel() {
+        notificationsNumberLabel.setText(String.valueOf(notificationCounter));
+
+        if(notificationCounter > 0) {
+            notificationsNumberLabel.setVisible(true);
+        }else {
+            notificationsNumberLabel.setVisible(false);
+        }
+    }
+
+    public void onNotificationsBellClicked(MouseEvent mouseEvent) {
+        if(notificationsVBox.isVisible()) {
+            clearNotifications();
+            notificationsVBox.setVisible(false);
+            notificationsNumberLabel.setVisible(false);
+            notificationsVBox.toBack();
+        } else {
+            notificationCounter = 0;
+            notificationsNumberLabel.setText("0");
+            notificationsNumberLabel.setVisible(false);
+            notificationsVBox.setVisible(true);
+            notificationsVBox.toFront();
+
+        }
+    }
+
+    private void clearNotifications() {
+        notificationCounter = 0;
+        notificationsVBox.getChildren().clear();
     }
 }

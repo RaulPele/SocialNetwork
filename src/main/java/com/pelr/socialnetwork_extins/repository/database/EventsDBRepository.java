@@ -4,7 +4,9 @@ import com.pelr.socialnetwork_extins.domain.Event;
 import com.pelr.socialnetwork_extins.domain.User;
 import com.pelr.socialnetwork_extins.repository.Repository;
 import com.pelr.socialnetwork_extins.repository.RepositoryException;
+import org.w3c.dom.events.EventException;
 
+import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -197,5 +199,31 @@ public class EventsDBRepository implements Repository<Long, Event> {
         } catch(SQLException e) {
             throw new RepositoryException("Cancel attending to event database error!\n" + e.getMessage());
         }
+    }
+
+    public Iterable<Event> getAttendingEvents(Long userID) {
+        String getAttendingSql = "SELECT ea.event_id, e.creator_id, e.title, e.description, e.location, e.date, u.first_name, u.last_name, u.email " +
+                "FROM \"EventsAttendees\" ea " +
+                "INNER JOIN \"Events\" e on e.id = ea.event_id " +
+                "INNER JOIN \"Users\" u on u.id = e.creator_id " +
+                "WHERE user_id = ?";
+
+        List<Event> attendingEvents = new ArrayList<>();
+
+        try(Connection connection = DriverManager.getConnection(url, username, password);
+            PreparedStatement getStatement = connection.prepareStatement(getAttendingSql)) {
+
+            getStatement.setLong(1, userID);
+            ResultSet resultSet = getStatement.executeQuery();
+
+            while(resultSet.next()) {
+                attendingEvents.add(getEventFromResultSet(resultSet));
+            }
+
+        } catch (SQLException e) {
+            throw new RepositoryException("Get attending events database error!\n" + e.getMessage());
+        }
+
+        return attendingEvents;
     }
 }

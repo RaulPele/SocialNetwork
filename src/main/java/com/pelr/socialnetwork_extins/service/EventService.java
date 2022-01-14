@@ -7,6 +7,7 @@ import com.pelr.socialnetwork_extins.utils.Observable;
 import com.pelr.socialnetwork_extins.utils.Observer;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class EventService{
     private EventsDBRepository eventsRepository;
@@ -37,5 +38,9 @@ public class EventService{
     public void cancelAttendingToEvent(User user, Event event) {
         event.removeParticipant(user);
         eventsRepository.cancelAttendingToEvent(user.getID(), event.getID());
+    }
+
+    public Iterable<Event> getAttendingEvents(Long userID) {
+        return eventsRepository.getAttendingEvents(userID);
     }
 }

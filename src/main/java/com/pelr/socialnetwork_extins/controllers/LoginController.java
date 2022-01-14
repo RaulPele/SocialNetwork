@@ -3,6 +3,7 @@ package com.pelr.socialnetwork_extins.controllers;
 import com.pelr.socialnetwork_extins.SceneManager;
 import com.pelr.socialnetwork_extins.domain.Event;
 import com.pelr.socialnetwork_extins.service.Controller;
+import com.pelr.socialnetwork_extins.service.NotificationsThread;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -20,6 +21,7 @@ public class LoginController {
 
     private SceneManager sceneManager;
     private Controller controller;
+    private NotificationsThread notificationsThread;
 
     @FXML
     private Button loginButton;
@@ -65,6 +67,10 @@ public class LoginController {
 
     }
 
+    private void startNotificationsThread() {
+        notificationsThread.start();
+    }
+
     public void onLoginButtonClicked(ActionEvent actionEvent) {
         String email = emailTextField.getText();
         String password = passwordTextField.getText();
@@ -73,14 +79,7 @@ public class LoginController {
             controller.login(email, password);
             //System.out.println("Logged in successfuly!");
             changeToHomePageScreen();
-
-            //event testing
-//            LocalDate date = LocalDate.of(2021, Month.JANUARY, 18);
-//            LocalTime time = LocalTime.of(14, 0);
-//            LocalDateTime dateTime = LocalDateTime.of(date, time);
-            //Event event = new Event(controller.getLoggedUser(), "Electric Castle", "Festival de muzica distractia", "Bontida, castel banfy", dateTime);
-            //controller.createEvent(event.getTitle(), event.getDescription(), event.getLocation(), event.getDate());
-            //controller.findAllEvents().forEach(a -> System.out.println(a.toString()));
+            startNotificationsThread();
         } catch (Exception e) {
             errorLabel.setVisible(true);
             errorLabel.setText("Invalid email or password!");
@@ -96,9 +95,14 @@ public class LoginController {
             homePageController.setSceneManager(sceneManager);
             homePageController.setController(controller);
             homePageController.initializeScreen();
+            notificationsThread.setHomePageController(homePageController);
 
         } catch (IOException e){
             e.printStackTrace();
         }
+    }
+
+    public void setNotificationsThread(NotificationsThread notificationsThread) {
+        this.notificationsThread = notificationsThread;
     }
 }

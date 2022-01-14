@@ -103,3 +103,21 @@
     -fx-background-color: #1c1e21;
 }
 
+#notificationLabel {
+    -fx-font-size: 16px;
+    -fx-padding: 5px 5px 5px 5px;
+    -fx-text-fill: white;
+    -fx-wrap-text: true;
+    -fx-min-width: 262px;
+}
+
+#notificationLabel:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+}
+
+#notificationsVBox {
+    -fx-background-color: #242526;
+    -fx-background-radius: 8px;
+    -fx-padding: 2px 2px 2px 2px;
+
+}
