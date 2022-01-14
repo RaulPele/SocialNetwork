@@ -7,11 +7,14 @@ import com.pelr.socialnetwork_extins.domain.DTOs.FriendshipDTO;
 
 import com.pelr.socialnetwork_extins.domain.DTOs.ConversationHeaderDTO;
 
+import com.pelr.socialnetwork_extins.domain.DTOs.ReportItem;
 import com.pelr.socialnetwork_extins.utils.Observable;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -460,6 +463,70 @@ public class Controller extends Observable {
         eventService.cancelAttendingToEvent(authentication.getLoggedUser(), event);
         notifyEventControllerObservers();
     }
+
+    public List<ReportItem> getFriendsAndMessagesReport(LocalDateTime startDate, LocalDateTime endDate) {
+        List<FriendshipDTO> friends = getFriendsMadeBetween(startDate, endDate);
+        List<Message> messages = messagingService.getMessagesReceivedBetween(authentication.getLoggedUser().getID(), startDate, endDate);
+        return createFriendsAndMessagesReport(friends, messages);
+    }
+
+    private List<FriendshipDTO> getFriendsMadeBetween(LocalDateTime startDate, LocalDateTime endDate) {
+        List<Friendship> friendships = friendshipService.getFriendshipsOfUserMadeBetween(authentication.getLoggedUser().getID(), startDate, endDate);
+
+        return friendships.stream().map(friendship -> {
+            Long friendID;
+
+            if(friendship.getID().getLeft().equals( authentication.getLoggedUser().getID())){
+                friendID = friendship.getID().getRight();
+            }else{
+                friendID = friendship.getID().getLeft();
+            }
+
+            User friend = userService.findOne(friendID);
+
+            return new FriendshipDTO(friend.getFirstName(), friend.getLastName(), friendship.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), friend.getEmail());
+        }).collect(Collectors.toList());
+    }
+
+    private List<ReportItem> createFriendsAndMessagesReport(List<FriendshipDTO> friends, List<Message> messages) {
+        List<ReportItem> report = new ArrayList<>();
+        friends.forEach(friend -> {
+            String content =  "became friends with " + friend.getFirstName() + " "+ friend.getLastName() + " (" + friend.getEmail() +")";
+            String date = friend.getDate().replace(' ', 'T');
+            ReportItem reportItem = new ReportItem(LocalDateTime.parse(date), content);
+
+            report.add(reportItem);
+        });
+
+        messages.forEach(message -> {
+            User sender = message.getFrom();
+            String content ="received message from " + sender.getFirstName() + " " + sender.getLastName() + " ("  + sender.getEmail() + "): " +
+                    message.getMessage();
+            ReportItem reportItem = new ReportItem(message.getDate(), content);
+
+            report.add(reportItem);
+        });
+
+        Collections.sort(report);
+
+        return report;
+    }
+
+    public List<ReportItem> getMessagesFromFriendReport(String firstName, String lastName, LocalDateTime startDate, LocalDateTime endDate) {
+        List<Message> messages =messagingService.getMessagesReceivedFrom(authentication.getLoggedUser().getID(), userService.findUserByName(firstName, lastName).getID(), startDate, endDate);
+        List<ReportItem> report = new ArrayList<>();
+
+        messages.forEach(message-> {
+            User sender = message.getFrom();
+            String content ="received message from " + sender.getFirstName() + " " + sender.getLastName() + " ("  + sender.getEmail() + "): " + message.getMessage();
+            ReportItem reportItem = new ReportItem(message.getDate(), content);
+
+            report.add(reportItem);
+        });
+
+        return report;
+    }
+
 }
 
 

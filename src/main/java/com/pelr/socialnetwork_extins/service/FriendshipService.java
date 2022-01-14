@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 /**
@@ -255,4 +256,15 @@ public class FriendshipService {
     public boolean hasOutgoingFriendRequest(Long senderId, Long receiverId) {
         return hasIncomingFriendRequest(receiverId, senderId);
     }
+
+    public List<Friendship> getFriendshipsOfUserMadeBetween(Long userID, LocalDateTime startDate, LocalDateTime endDate) {
+        Iterable<Friendship> friendships = friendshipRepository.findAll();
+
+        return StreamSupport.stream(friendships.spliterator(), false)
+                .filter(friendship -> (friendship.getDate().isAfter(startDate) || friendship.getDate().equals(startDate)) &&
+                                        friendship.getDate().isBefore(endDate) || friendship.getDate().equals(endDate))
+                .collect(Collectors.toList());
+    }
+
+
 }

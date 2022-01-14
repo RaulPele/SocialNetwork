@@ -20,6 +20,7 @@ public class SceneManager {
     private ProfilePageController profilePageController;
     private FriendsPageController friendsPageController;
     private EventPageController eventPageController;
+    private ReportsPageController reportsPageController;
 
     public SceneManager(Stage window) {
         this.window = window;
@@ -47,6 +48,10 @@ public class SceneManager {
 
     public FriendRequestsPageController getFriendRequestsPageController() {
         return friendRequestsPageController;
+    }
+
+    public ReportsPageController getReportsPageController() {
+        return reportsPageController;
     }
 
     public EventPageController getEventPageController() {
@@ -154,5 +159,19 @@ public class SceneManager {
         window.setTitle("Event");
 
         return eventsPageScene;
+    }
+
+    public void changeToReportsPageScene() throws IOException {
+        Scene reportsPageScene = initReportsPageScene();
+        window.setScene(reportsPageScene);
+    }
+
+    private Scene initReportsPageScene() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("fxml/reports_page-view.fxml"));
+        Scene reportsPageScene = new Scene(fxmlLoader.load());
+        reportsPageController = fxmlLoader.getController();
+        window.setTitle("Reports");
+
+        return reportsPageScene;
     }
  }

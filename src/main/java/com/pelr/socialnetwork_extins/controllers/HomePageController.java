@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 public class HomePageController implements Observer {
     private SceneManager sceneManager;
@@ -267,10 +268,15 @@ public class HomePageController implements Observer {
                     reverseFullName.toLowerCase().startsWith(searchInput);
         };
 
-        List<ConversationHeaderDTO> headers = new ArrayList<>();
-        controller.getConversationHeaders().forEach(headers::add);
+//        List<ConversationHeaderDTO> headers = new ArrayList<>();
+//        controller.getConversationHeaders().forEach(headers::add);
 
-        contacts.setAll( headers.stream()
+//        contacts.setAll( headers.stream()
+//                .filter(nameStartsWith)
+//                .collect(Collectors.toList()));
+
+        Iterable<ConversationHeaderDTO> headerDTOS = controller.getConversationHeaders();
+        contacts.setAll(StreamSupport.stream(headerDTOS.spliterator(), false)
                 .filter(nameStartsWith)
                 .collect(Collectors.toList()));
     }
@@ -307,5 +313,23 @@ public class HomePageController implements Observer {
         homeEventsGridPane.getChildren().clear();
         eventRowCount=0;
         loadEvents();
+    }
+
+    public void onReportsButtonClicked(ActionEvent actionEvent) {
+        changeToReportsScreen();
+    }
+
+    private void changeToReportsScreen() {
+        try{
+            sceneManager.changeToReportsPageScene();
+            sceneManager.centerStageOnScreen();
+
+            ReportsPageController reportsPageController = sceneManager.getReportsPageController();
+            reportsPageController.setController(controller);
+            reportsPageController.setSceneManager(sceneManager);
+            reportsPageController.initializeScreen();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
