@@ -8,82 +8,90 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox id="rootLayout" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="425.0" prefWidth="440.0" stylesheets="@../css/register_stylesheet.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pelr.socialnetwork_extins.controllers.RegisterController">
-   <Label fx:id="errorLabel" text="errorlabel" textFill="red" wrapText="true">
-      <VBox.margin>
-         <Insets bottom="20.0" left="40.0" />
-      </VBox.margin>
-   </Label>
-
-    <Label text="Email" textFill="white" wrapText="true">
-        <font>
-            <Font size="14.0" />
-        </font>
-        <VBox.margin>
-            <Insets bottom="2.0" />
-        </VBox.margin>
-    </Label>
-
-    <TextField fx:id="emailTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="235.0" styleClass="rounded-textfields">
-        <VBox.margin>
-            <Insets bottom="30.0" />
-        </VBox.margin>
-    </TextField>
-
-    <Label text="First name" textFill="white" wrapText="true">
-        <font>
-            <Font size="14.0" />
-        </font>
-        <VBox.margin>
-            <Insets bottom="2.0" />
-        </VBox.margin>
-    </Label>
-
-    <TextField fx:id="firstNameTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="235.0" styleClass="rounded-textfields">
-        <VBox.margin>
-            <Insets bottom="30.0" />
-        </VBox.margin>
-    </TextField>
-
-    <Label text="Last name" textFill="white" wrapText="true">
-        <font>
-            <Font size="14.0" />
-        </font>
-        <VBox.margin>
-            <Insets bottom="2.0" />
-        </VBox.margin>
-    </Label>
-
-    <TextField fx:id="lastNameTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="235.0" styleClass="rounded-textfields">
-        <VBox.margin>
-            <Insets bottom="30.0" />
-        </VBox.margin>
-    </TextField>
-
-
-
-    <Label text="Password" textFill="white" wrapText="true">
-        <font>
-            <Font size="14.0" />
-        </font>
-        <VBox.margin>
-            <Insets bottom="2.0" />
-        </VBox.margin>
-    </Label>
-
-    <PasswordField fx:id="passwordTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="235.0" styleClass="rounded-textfields">
-        <font>
-            <Font size="10.0" />
-        </font>
-    </PasswordField>
-
-
-    <Button id="createAccountButton" fx:id="createAccountButton" alignment="CENTER" mnemonicParsing="false" onAction="#onCreateAccountButtonClicked" prefHeight="30.0" prefWidth="184.0" text="Create account" textAlignment="CENTER">
-        <VBox.margin>
-            <Insets left="27.0" top="25.0" />
-        </VBox.margin>
-    </Button>
-    <padding>
-        <Insets left="100.0" right="100.0" top="30.0" />
-    </padding>
+<VBox id="rootLayout" fx:id="rootLayout" stylesheets="@../css/register_stylesheet.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pelr.socialnetwork_extins.controllers.RegisterController">
+   <children>
+      <VBox id="registerVBox" fx:id="registerVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="425.0" prefWidth="440.0">
+         <Label fx:id="errorLabel" text="errorlabel" textFill="red" wrapText="true">
+            <VBox.margin>
+               <Insets bottom="20.0" left="40.0" />
+            </VBox.margin>
+         </Label>
+      
+                <Label text="Email" textFill="white" wrapText="true">
+              <font>
+                  <Font size="14.0" />
+              </font>
+              <VBox.margin>
+                  <Insets bottom="2.0" />
+              </VBox.margin>
+          </Label>
+      
+          <TextField fx:id="emailTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="235.0" styleClass="rounded-textfields">
+              <VBox.margin>
+                  <Insets bottom="30.0" />
+              </VBox.margin>
+          </TextField>
+      
+          <Label text="First name" textFill="white" wrapText="true">
+              <font>
+                  <Font size="14.0" />
+              </font>
+              <VBox.margin>
+                  <Insets bottom="2.0" />
+              </VBox.margin>
+          </Label>
+      
+          <TextField fx:id="firstNameTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="235.0" styleClass="rounded-textfields">
+              <VBox.margin>
+                  <Insets bottom="30.0" />
+              </VBox.margin>
+          </TextField>
+      
+          <Label text="Last name" textFill="white" wrapText="true">
+              <font>
+                  <Font size="14.0" />
+              </font>
+              <VBox.margin>
+                  <Insets bottom="2.0" />
+              </VBox.margin>
+          </Label>
+      
+          <TextField fx:id="lastNameTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="235.0" styleClass="rounded-textfields">
+              <VBox.margin>
+                  <Insets bottom="30.0" />
+              </VBox.margin>
+          </TextField>
+      
+      
+      
+          <Label text="Password" textFill="white" wrapText="true">
+              <font>
+                  <Font size="14.0" />
+              </font>
+              <VBox.margin>
+                  <Insets bottom="2.0" />
+              </VBox.margin>
+          </Label>
+      
+          <PasswordField fx:id="passwordTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="235.0" styleClass="rounded-textfields">
+              <font>
+                  <Font size="10.0" />
+              </font>
+          </PasswordField>
+      
+      
+          <Button id="createAccountButton" fx:id="createAccountButton" alignment="CENTER" mnemonicParsing="false" onAction="#onCreateAccountButtonClicked" prefHeight="30.0" prefWidth="184.0" text="Create account" textAlignment="CENTER">
+              <VBox.margin>
+                  <Insets left="27.0" top="25.0" />
+              </VBox.margin>
+          </Button>
+          <padding>
+              <Insets left="100.0" right="100.0" top="30.0" />
+          </padding>
+      </VBox>
+      <Button id="backButton" fx:id="backButton" mnemonicParsing="false" onAction="#onBackButtonClicked" prefHeight="37.0" prefWidth="79.0" text="Back">
+         <VBox.margin>
+            <Insets bottom="12.0" left="12.0" />
+         </VBox.margin></Button>
+   </children>
 </VBox>

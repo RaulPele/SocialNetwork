@@ -7,7 +7,6 @@ import com.pelr.socialnetwork_extins.domain.DTOs.ConversationHeaderDTO;
 import com.pelr.socialnetwork_extins.domain.Event;
 import com.pelr.socialnetwork_extins.domain.User;
 import com.pelr.socialnetwork_extins.service.Controller;
-import com.pelr.socialnetwork_extins.service.NotificationsThread;
 import com.pelr.socialnetwork_extins.utils.Observer;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -75,7 +74,6 @@ public class HomePageController implements Observer {
 
     @FXML
     private Label notificationsNumberLabel;
-
 
     @FXML
     private Button createEventButton;
@@ -164,7 +162,6 @@ public class HomePageController implements Observer {
             Node eventCardView = createEventCardView(event);
             addEventCardToLayout(eventCardView);
         });
-
     }
 
     private Node createEventCardView(Event event) {

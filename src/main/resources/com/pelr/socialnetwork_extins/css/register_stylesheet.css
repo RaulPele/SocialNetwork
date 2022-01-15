@@ -1,14 +1,18 @@
-#rootLayout{
-    -fx-background-color: #202124
+#rootLayout {
+    -fx-background-color: #1c1e21;
 }
 
-#createAccountButton{
+#registerVBox {
+    -fx-background-color: #1c1e21;
+}
+
+#createAccountButton, #backButton {
     -fx-background-color: #1877f2;
     -fx-text-fill: white;
 }
 
-#createAccountButton:hover{
+#createAccountButton:hover, #backButton:hover {
     /*-fx-background-color: #166fe5;*/
-    -fx-background-color: #165be5
+    -fx-background-color: #165be5;
 
 }

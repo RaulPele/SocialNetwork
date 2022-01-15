@@ -21,7 +21,6 @@ import javafx.scene.layout.*;
 import java.util.List;
 
 public class ChatRoomController {
-
     private Controller controller;
     private ChatRoom chatRoom;
     private boolean replyModeOn;
@@ -72,9 +71,7 @@ public class ChatRoomController {
         loadMessages();
 
         contactHeaderImageView.setImage(new Image(String.valueOf(MainApplication.class.getResource("assets/unknown_user.png"))));
-
         messagesPane.heightProperty().addListener((observable, oldValue, newValue) -> messagesScrollPane.setVvalue((Double) newValue));
-
     }
 
     private void loadMessages() {
@@ -94,7 +91,6 @@ public class ChatRoomController {
         }
 
         messagesRowCount++;
-       // messagesPane.addRow(messagesRowCount);
     }
 
     private Node createMessageView(Message message) {
@@ -207,11 +203,6 @@ public class ChatRoomController {
         messageTextField.clear();
     }
 
-    private void refreshScreen() {
-        messagesPane.getChildren().clear();
-        loadMessages();
-    }
-
     public void onSendToListButtonClicked(ActionEvent actionEvent) {
         String userNames = userListTextField.getText();
         String messageString = messageTextField.getText();
@@ -221,12 +212,10 @@ public class ChatRoomController {
 
         try {
             chatRoom.sendToMultipleUsers(messageString, userNames);
-            //refreshScreen();
             addMessageToLayout(chatRoom.getLastMessage());
             messageTextField.clear();
         } catch (Exception ex) {
             userListTextField.setText("Invalid list of users!");
         }
     }
-
 }

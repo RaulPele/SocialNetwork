@@ -3,7 +3,6 @@ package com.pelr.socialnetwork_extins.service;
 import com.pelr.socialnetwork_extins.controllers.HomePageController;
 import javafx.application.Platform;
 
-import java.sql.SQLOutput;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Timer;

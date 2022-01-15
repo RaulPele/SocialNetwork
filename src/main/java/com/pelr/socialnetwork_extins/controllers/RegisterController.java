@@ -89,4 +89,8 @@ public class RegisterController {
             e.printStackTrace();
         }
     }
+
+    public void onBackButtonClicked(ActionEvent actionEvent) {
+        changeToLoginScreen();
+    }
 }

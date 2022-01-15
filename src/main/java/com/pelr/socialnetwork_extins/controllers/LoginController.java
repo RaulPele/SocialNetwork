@@ -1,7 +1,6 @@
 package com.pelr.socialnetwork_extins.controllers;
 
 import com.pelr.socialnetwork_extins.SceneManager;
-import com.pelr.socialnetwork_extins.domain.Event;
 import com.pelr.socialnetwork_extins.service.Controller;
 import com.pelr.socialnetwork_extins.service.NotificationsThread;
 import javafx.event.ActionEvent;
@@ -13,16 +12,11 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.Month;
+
 
 public class LoginController {
-
     private SceneManager sceneManager;
     private Controller controller;
-    private NotificationsThread notificationsThread;
 
     @FXML
     private Button loginButton;
@@ -67,10 +61,6 @@ public class LoginController {
         }
     }
 
-    private void startNotificationsThread() {
-        notificationsThread.start();
-    }
-
     public void onLoginButtonClicked(ActionEvent actionEvent) {
         String email = emailTextField.getText();
         String password = passwordTextField.getText();
@@ -86,14 +76,13 @@ public class LoginController {
 
     private void changeToHomePageScreen() {
         try{
-            //setOnCloseRequestHandler(sceneManager.getWindow());
             sceneManager.changeToHomePageScene();
             sceneManager.centerStageOnScreen();
             HomePageController homePageController = sceneManager.getHomePageController();
             homePageController.setSceneManager(sceneManager);
             homePageController.setController(controller);
             homePageController.initializeScreen();
-            //notificationsThread.setHomePageController(homePageController);
+
             NotificationsThread notificationsThread = new NotificationsThread(controller);
             notificationsThread.setHomePageController(homePageController);
             controller.setNotificationsThread(notificationsThread);
@@ -102,10 +91,6 @@ public class LoginController {
         } catch (IOException e){
             e.printStackTrace();
         }
-    }
-
-    public void setNotificationsThread(NotificationsThread notificationsThread) {
-        //this.notificationsThread = notificationsThread;
     }
 
     private void setOnCloseRequestHandler(Stage stage) {

@@ -1,8 +1,6 @@
 package com.pelr.socialnetwork_extins;
 
-import com.pelr.socialnetwork_extins.controllers.FriendRequestsPageController;
 import com.pelr.socialnetwork_extins.controllers.LoginController;
-import com.pelr.socialnetwork_extins.domain.Event;
 import com.pelr.socialnetwork_extins.domain.Friendship;
 import com.pelr.socialnetwork_extins.domain.Tuple;
 import com.pelr.socialnetwork_extins.domain.validators.FriendshipValidator;
@@ -14,19 +12,12 @@ import com.pelr.socialnetwork_extins.repository.database.MessageDBRepository;
 import com.pelr.socialnetwork_extins.repository.database.UserDBRepository;
 import com.pelr.socialnetwork_extins.service.*;
 import com.pelr.socialnetwork_extins.utils.Credentials;
-import com.pelr.socialnetwork_extins.utils.PasswordEncryptor;
-import com.pelr.socialnetwork_extins.utils.PasswordVerifier;
 import javafx.application.Application;
-import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 
 public class MainApplication extends Application {
-
     private Controller controller;
 
     @Override
@@ -55,14 +46,12 @@ public class MainApplication extends Application {
 
     private void initializeView(Stage stage) throws IOException{
         SceneManager sceneManager = new SceneManager(stage);
-
         sceneManager.changeToLoginScene();
-        LoginController loginController = sceneManager.getLoginController();
 
+        LoginController loginController = sceneManager.getLoginController();
         loginController.setSceneManager(sceneManager);
         loginController.setController(controller);
     }
-
 
     public static void main(String[] args) {
        launch();
