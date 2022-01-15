@@ -73,8 +73,7 @@ public class EventPageController implements Observer {
         detailsLocationLabel.setText(event.getLocation());
         descriptionLabel.setText(event.getDescription());
 
-        Image image = new Image(String.valueOf(MainApplication.class.getResource("assets/concert.jpeg")));
-        eventImageView.setImage(image);
+        loadEventImage();
 
         if(event.isAttending(controller.getLoggedUser())) {
             attendButton.setText("Attending");
@@ -147,5 +146,15 @@ public class EventPageController implements Observer {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void loadEventImage() {
+        String pictureName = event.getTitle() + ".jpeg";
+
+        String pictureURL = String.valueOf(MainApplication.class.getResource("assets/" + pictureName));
+        if (pictureURL.equals("null")) {
+            pictureURL = String.valueOf(MainApplication.class.getResource("assets/concert.jpeg"));
+        }
+        eventImageView.setImage(new Image(pictureURL));
     }
 }

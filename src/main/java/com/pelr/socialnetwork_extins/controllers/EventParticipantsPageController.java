@@ -48,11 +48,8 @@ public class EventParticipantsPageController {
 
         try {
             Parent participantView =fxmlLoader.load();
-            Label friendNameLabel = (Label) participantView.lookup("#friendItemNameLabel");
-            friendNameLabel.setText(participant.getFirstName() + " " + participant.getLastName());
-
-            ImageView friendProfilePicture = (ImageView) participantView.lookup("#friendItemImageView");
-            friendProfilePicture.setImage(new Image(String.valueOf(MainApplication.class.getResource("assets/unknown_user.png"))));
+            FriendItemController friendItemController = fxmlLoader.getController();
+            friendItemController.initializeFriendItem(participant);
 
             return participantView;
         } catch (IOException e) {

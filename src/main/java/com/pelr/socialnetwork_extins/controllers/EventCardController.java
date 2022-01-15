@@ -54,8 +54,7 @@ public class EventCardController implements Observer{
     public void initializeEvent(Event event) {
         this.event = event;
 
-        Image eventImage = new Image(String.valueOf(MainApplication.class.getResource("assets/concert.jpeg")));
-         eventImageView.setImage(eventImage);
+        loadEventImage();
         dateLabel.setText(event.getDate().getDayOfWeek() + ", " + event.getDate().getMonth() + " " + event.getDate().getDayOfMonth());
         titleLabel.setText(event.getTitle());
         locationLabel.setText(event.getLocation());
@@ -113,5 +112,15 @@ public class EventCardController implements Observer{
     @Override
     public void update() {
         participantsNumberLabel.setText(event.getParticipants().size() + " people attending");
+    }
+
+    private void loadEventImage() {
+        String pictureName = event.getTitle() + ".jpeg";
+
+        String pictureURL = String.valueOf(MainApplication.class.getResource("assets/" + pictureName));
+        if (pictureURL.equals("null")) {
+            pictureURL = String.valueOf(MainApplication.class.getResource("assets/concert.jpeg"));
+        }
+        eventImageView.setImage(new Image(pictureURL));
     }
 }

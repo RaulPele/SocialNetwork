@@ -98,6 +98,7 @@ public class HomePageController implements Observer {
         contacts.addListener((ListChangeListener<ConversationHeaderDTO>) c -> showFilteredContacts());
         loadCustomSearchBar();
         loadEvents();
+        loadProfilePicture();
         controller.addObserver(this);
         notificationCounter=0; //verify
     }
@@ -381,5 +382,15 @@ public class HomePageController implements Observer {
     private void clearNotifications() {
         notificationCounter = 0;
         notificationsVBox.getChildren().clear();
+    }
+
+    private void loadProfilePicture() {
+        String pictureName = controller.getLoggedUser().getEmail() +".jpeg";
+
+        String pictureURL = String.valueOf(MainApplication.class.getResource("assets/" + pictureName));
+        if (pictureURL.equals("null")) {
+            pictureURL = String.valueOf(MainApplication.class.getResource("assets/unknown_user.png"));
+        }
+        profileImageView.setImage(new Image(pictureURL));
     }
 }

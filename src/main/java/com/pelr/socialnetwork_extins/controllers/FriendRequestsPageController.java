@@ -53,16 +53,14 @@ public class FriendRequestsPageController {
 
     private Node createFriendRequestCard(FriendRequestDTO requestDTO){
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("fxml/friend_request.fxml"));
-        FriendRequestController friendRequestController = new FriendRequestController();
-        fxmlLoader.setController(friendRequestController);
 
         try {
             Parent requestView = fxmlLoader.load();
-            Label nameLabel = (Label) requestView.lookup("#nameLabel");
-            nameLabel.setText(requestDTO.getFirstName() + " " + requestDTO.getLastName());
+            FriendRequestController requestController = fxmlLoader.getController();
+            requestController.initializeRequest(requestDTO);
 
-            Button acceptButton = (Button) requestView.lookup("#acceptButton");
-            Button declineButton = (Button) requestView.lookup("#declineButton");
+            Button acceptButton = (Button)requestView.lookup("#acceptButton");
+            Button declineButton = (Button)requestView.lookup("#declineButton");
 
             acceptButton.setOnAction(event -> onAcceptButtonClicked(event, requestDTO.getEmail()));
             declineButton.setOnAction(event -> onDeclineButtonClicked(event, requestDTO.getEmail()));

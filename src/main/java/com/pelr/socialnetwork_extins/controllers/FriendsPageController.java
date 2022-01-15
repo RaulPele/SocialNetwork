@@ -65,12 +65,9 @@ public class FriendsPageController {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("fxml/friend_item_big-view.fxml"));
 
         try {
-            Parent friendItemView =fxmlLoader.load();
-            Label friendNameLabel = (Label) friendItemView.lookup("#friendItemNameLabel");
-            friendNameLabel.setText(friend.getFirstName() + " " + friend.getLastName());
-
-            ImageView friendProfilePicture = (ImageView) friendItemView.lookup("#friendItemImageView");
-            friendProfilePicture.setImage(new Image(String.valueOf(MainApplication.class.getResource("assets/unknown_user.png"))));
+            Node friendItemView =fxmlLoader.load();
+            FriendItemController friendItemController = fxmlLoader.getController();
+            friendItemController.initializeFriendItem(friend);
 
             return friendItemView;
         } catch (IOException e) {

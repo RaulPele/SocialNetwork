@@ -17,8 +17,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
 
 import java.io.IOException;
 import java.util.List;
@@ -70,6 +68,7 @@ public class ProfilePageController implements Observer {
         profilePictureImageView.setImage(new Image(String.valueOf(MainApplication.class.getResource("assets/unknown_user.png"))));
 
         loadFriendList();
+        loadProfilePicture();
     }
 
     private void loadFriendList() {
@@ -89,11 +88,8 @@ public class ProfilePageController implements Observer {
 
         try {
             Parent friendItemView =fxmlLoader.load();
-            Label friendNameLabel = (Label) friendItemView.lookup("#friendItemNameLabel");
-            friendNameLabel.setText(user.getFirstName() + " " + user.getLastName());
-
-            ImageView friendProfilePicture = (ImageView) friendItemView.lookup("#friendItemImageView");
-            friendProfilePicture.setImage(new Image(String.valueOf(MainApplication.class.getResource("assets/unknown_user.png"))));
+            FriendItemController friendItemController = fxmlLoader.getController();
+            friendItemController.initializeFriendItem(user);
 
             return friendItemView;
         } catch (IOException e) {
@@ -181,7 +177,6 @@ public class ProfilePageController implements Observer {
         controller.acceptFriendRequest(profilePage.getProfileOwner().getEmail());
         requestButton.setText("Unfriend");
         requestButton.setOnAction(this::onUnfriendButtonClicked);
-        //addFriendItemToLayout(createFriendItemView(controller.getLoggedUser()));
     }
 
     private void onUnsendButtonClicked(ActionEvent actionEvent) {
@@ -206,5 +201,15 @@ public class ProfilePageController implements Observer {
     @Override
     public void update() {
         reloadFriendList();
+    }
+
+    private void loadProfilePicture() {
+        String pictureName = profilePage.getProfileOwner().getEmail()+".jpeg";
+
+        String pictureURL = String.valueOf(MainApplication.class.getResource("assets/" + pictureName));
+        if (pictureURL.equals("null")) {
+            pictureURL = String.valueOf(MainApplication.class.getResource("assets/unknown_user.png"));
+        }
+        profilePictureImageView.setImage(new Image(pictureURL));
     }
 }

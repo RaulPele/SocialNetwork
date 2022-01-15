@@ -5,9 +5,10 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox id="friendItemLayout" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="60.0" prefWidth="100.0" stylesheets="@../css/friend_item-stylesheet.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<VBox id="friendItemLayout" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="60.0" prefWidth="100.0" stylesheets="@../css/friend_item-stylesheet.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.pelr.socialnetwork_extins.controllers.FriendItemController" >
 
-    <ImageView id="friendItemImageView" fitHeight="60.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+    <ImageView id="friendItemImageView" fx:id="friendItemImageView" fitHeight="60.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
         <VBox.margin>
             <Insets bottom="10.0" top="10.0" />
         </VBox.margin></ImageView>
