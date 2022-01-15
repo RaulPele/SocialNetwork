@@ -7,6 +7,7 @@ import com.pelr.socialnetwork_extins.domain.DTOs.ConversationHeaderDTO;
 import com.pelr.socialnetwork_extins.domain.Event;
 import com.pelr.socialnetwork_extins.domain.User;
 import com.pelr.socialnetwork_extins.service.Controller;
+import com.pelr.socialnetwork_extins.service.NotificationsThread;
 import com.pelr.socialnetwork_extins.utils.Observer;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -157,6 +158,7 @@ public class HomePageController implements Observer {
 
     private void loadEvents() {
         Iterable<Event> events = controller.findAllEvents();
+        eventRowCount = 0;
         events.forEach(event -> {
             Node eventCardView = createEventCardView(event);
             addEventCardToLayout(eventCardView);
@@ -231,6 +233,7 @@ public class HomePageController implements Observer {
 
     private void changeToProfilePageScreen(String email) {
         try {
+           // controller.getNotificationsThread().stop();
             sceneManager.changeToProfilePageScene();
             sceneManager.centerStageOnScreen();
 
@@ -250,7 +253,10 @@ public class HomePageController implements Observer {
     }
 
     private void changeToLoginScreen() {
+
         try{
+            //controller.getNotificationsThread().stop();
+
             sceneManager.changeToLoginScene();
             sceneManager.centerStageOnScreen();
 
@@ -276,13 +282,6 @@ public class HomePageController implements Observer {
                     fullName.toLowerCase().startsWith(searchInput) ||
                     reverseFullName.toLowerCase().startsWith(searchInput);
         };
-
-//        List<ConversationHeaderDTO> headers = new ArrayList<>();
-//        controller.getConversationHeaders().forEach(headers::add);
-
-//        contacts.setAll( headers.stream()
-//                .filter(nameStartsWith)
-//                .collect(Collectors.toList()));
 
         Iterable<ConversationHeaderDTO> headerDTOS = controller.getConversationHeaders();
         contacts.setAll(StreamSupport.stream(headerDTOS.spliterator(), false)
@@ -381,7 +380,6 @@ public class HomePageController implements Observer {
             notificationsNumberLabel.setVisible(false);
             notificationsVBox.setVisible(true);
             notificationsVBox.toFront();
-
         }
     }
 

@@ -28,20 +28,12 @@ import java.io.IOException;
 public class MainApplication extends Application {
 
     private Controller controller;
-    private NotificationsThread notificationsThread;
 
     @Override
     public void start(Stage stage) throws IOException {
         initializeController();
-        notificationsThread = new NotificationsThread(controller);
-        setOnCloseRequestHandler(stage);
         initializeView(stage);
         stage.show();
-    }
-
-    private void setOnCloseRequestHandler(Stage stage) {
-        stage.setOnCloseRequest(event ->
-                notificationsThread.stop());
     }
 
     private void initializeController() {
@@ -69,8 +61,6 @@ public class MainApplication extends Application {
 
         loginController.setSceneManager(sceneManager);
         loginController.setController(controller);
-        loginController.setNotificationsThread(notificationsThread);
-
     }
 
 

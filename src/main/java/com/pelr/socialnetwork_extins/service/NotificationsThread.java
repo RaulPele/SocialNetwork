@@ -109,7 +109,14 @@ public class NotificationsThread extends Thread {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                checkNotifications();
+                synchronized (controller.getAuthentication()) {
+                    if(controller.userIsLoggedIn()) {
+                        checkNotifications();
+                    }else {
+                        timer.cancel();
+
+                    }
+                }
             }
         }, 0, 1000);
     }

@@ -94,8 +94,15 @@ public class SceneManager {
 
     private Scene initHomepageScene() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("fxml/home_page-view.fxml"));
-        Scene homePageScene = new Scene(fxmlLoader.load());
-        homePageController = fxmlLoader.getController();
+        Scene homePageScene;
+        if (homePageController == null) {
+
+            homePageScene = new Scene(fxmlLoader.load());
+            homePageController = fxmlLoader.getController();
+        } else{
+            fxmlLoader.setControllerFactory((e)->homePageController);
+            homePageScene= new Scene(fxmlLoader.load());
+        }
         window.setTitle("Social network");
 
         return homePageScene;
@@ -173,5 +180,9 @@ public class SceneManager {
         window.setTitle("Reports");
 
         return reportsPageScene;
+    }
+
+    public Stage getWindow() {
+        return window;
     }
  }

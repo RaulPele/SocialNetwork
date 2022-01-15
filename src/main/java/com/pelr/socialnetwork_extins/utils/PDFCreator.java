@@ -1,22 +1,24 @@
 package com.pelr.socialnetwork_extins.utils;
 
+import javafx.stage.DirectoryChooser;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.w3c.dom.Document;
 
 import java.io.IOException;
 import java.util.List;
 
 
-public class PDFWriter {
+public class PDFCreator {
     String fileName;
 
-    public PDFWriter(String fileName) {
-        this.fileName = fileName;
+    public PDFCreator() {
+
     }
 
-    public void writeFile(List<String> content) {
+    public PDDocument createFile(List<String> content) {
         PDDocument document = new PDDocument();
         PDPage page = new PDPage();
 
@@ -38,13 +40,13 @@ public class PDFWriter {
             contentStream.endText();
             contentStream.close();
 
-            document.save("src/main/resources/com/pelr/socialnetwork_extins/reports/" + fileName + ".pdf");
+            //document.save("src/main/resources/com/pelr/socialnetwork_extins/reports/" + fileName + ".pdf");
 
-            document.close();
+            return document;
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        return null;
     }
 
     private void writeLineToFile(PDPageContentStream contentStream, String line) throws IOException{

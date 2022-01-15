@@ -30,9 +30,9 @@ public class Authentication {
      * @throws AuthenticationException if there is no logged in user
      */
     public User getLoggedUser(){
-        if(loggedUser == null){
-            throw new AuthenticationException("You are not logged in!");
-        }
+//        if(loggedUser == null){
+//            throw new AuthenticationException("You are not logged in!");
+//        }
 
         return loggedUser;
     }

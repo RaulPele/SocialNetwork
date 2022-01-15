@@ -3,11 +3,15 @@ package com.pelr.socialnetwork_extins.controllers;
 import com.pelr.socialnetwork_extins.SceneManager;
 import com.pelr.socialnetwork_extins.domain.DTOs.ReportItem;
 import com.pelr.socialnetwork_extins.service.Controller;
-import com.pelr.socialnetwork_extins.utils.PDFWriter;
+import com.pelr.socialnetwork_extins.service.UserNotFoundException;
+import com.pelr.socialnetwork_extins.utils.PDFCreator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.stage.FileChooser;
+import org.apache.pdfbox.pdmodel.PDDocument;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -147,24 +151,40 @@ public class ReportsPageController {
             return;
         }
 
-        report = controller.getMessagesFromFriendReport(names[0], names[1], startDateTime, endDateTime);
-        if(report.size() == 0) {
-            reportTextArea.appendText("No messages received from " + friendName +" in the selected time period.");
+        try {
+            report = controller.getMessagesFromFriendReport(names[0], names[1], startDateTime, endDateTime);
+
+
+            if (report.size() == 0) {
+                reportTextArea.appendText("No messages received from " + friendName + " in the selected time period.");
+            }
+            report.forEach(reportItem -> {
+                reportTextArea.appendText(reportItem.toString() + '\n' + '\n');
+            });
+        }catch (UserNotFoundException e) {
+            reportTextArea.setText("Friend " + friendName +" not found!");
         }
-        report.forEach(reportItem -> {
-            reportTextArea.appendText(reportItem.toString() +'\n' +'\n');
-        });
     }
 
     public void onSaveToPDFButtonClicked(ActionEvent actionEvent) {
         String fileName = "generated_report";
-        PDFWriter pdfWriter = new PDFWriter(fileName);
+        PDFCreator pdfCreator = new PDFCreator();
 
         if(report.size() == 0) {
             return ;
         }
+
         List<String> content = new ArrayList<>();
         report.forEach(reportItem -> content.add(reportItem.toString()));
-        pdfWriter.writeFile(content);
+        PDDocument document = pdfCreator.createFile(content);
+        FileChooser fileChooser = new FileChooser();
+        File selectedDirectory = fileChooser.showSaveDialog(sceneManager.getWindow());
+
+        try {
+            document.save(selectedDirectory + ".pdf");
+            document.close();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
     }
 }

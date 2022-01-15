@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -64,7 +65,6 @@ public class LoginController {
         } catch (IOException ex){
             ex.printStackTrace();
         }
-
     }
 
     private void startNotificationsThread() {
@@ -77,9 +77,7 @@ public class LoginController {
 
         try {
             controller.login(email, password);
-            //System.out.println("Logged in successfuly!");
             changeToHomePageScreen();
-            startNotificationsThread();
         } catch (Exception e) {
             errorLabel.setVisible(true);
             errorLabel.setText("Invalid email or password!");
@@ -88,14 +86,18 @@ public class LoginController {
 
     private void changeToHomePageScreen() {
         try{
+            //setOnCloseRequestHandler(sceneManager.getWindow());
             sceneManager.changeToHomePageScene();
             sceneManager.centerStageOnScreen();
-
             HomePageController homePageController = sceneManager.getHomePageController();
             homePageController.setSceneManager(sceneManager);
             homePageController.setController(controller);
             homePageController.initializeScreen();
+            //notificationsThread.setHomePageController(homePageController);
+            NotificationsThread notificationsThread = new NotificationsThread(controller);
             notificationsThread.setHomePageController(homePageController);
+            controller.setNotificationsThread(notificationsThread);
+            controller.getNotificationsThread().start();
 
         } catch (IOException e){
             e.printStackTrace();
@@ -103,6 +105,10 @@ public class LoginController {
     }
 
     public void setNotificationsThread(NotificationsThread notificationsThread) {
-        this.notificationsThread = notificationsThread;
+        //this.notificationsThread = notificationsThread;
+    }
+
+    private void setOnCloseRequestHandler(Stage stage) {
+
     }
 }

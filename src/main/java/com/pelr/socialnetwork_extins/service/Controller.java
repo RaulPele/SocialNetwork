@@ -29,6 +29,8 @@ public class Controller extends Observable {
     private MessagingService messagingService;
     private EventService eventService;
 
+    private NotificationsThread notificationsThread;
+
     /**
      * Creates a controller containing multiple services.
      * Loads friend list for all users on creation.
@@ -91,7 +93,9 @@ public class Controller extends Observable {
      * Logs out current user.
      */
     public void logout(){
-        authentication.logout();
+        synchronized (authentication){
+            authentication.logout();
+        }
     }
 
     /**
@@ -286,12 +290,7 @@ public class Controller extends Observable {
     }
 
     public boolean userIsLoggedIn(){
-        try {
-            authentication.getLoggedUser();
-            return true;
-        } catch (AuthenticationException ex) {
-            return false;
-        }
+        return authentication.getLoggedUser() != null;
     }
 
     public ChatRoom createChatRoom(String email) {
@@ -513,7 +512,13 @@ public class Controller extends Observable {
     }
 
     public List<ReportItem> getMessagesFromFriendReport(String firstName, String lastName, LocalDateTime startDate, LocalDateTime endDate) {
-        List<Message> messages =messagingService.getMessagesReceivedFrom(authentication.getLoggedUser().getID(), userService.findUserByName(firstName, lastName).getID(), startDate, endDate);
+        User friend = userService.findUserByName(firstName, lastName);
+
+        if(friend == null || !friendshipService.areFriends(authentication.getLoggedUser().getID(), friend.getID())) {
+            throw new UserNotFoundException("Friend not found!");
+        }
+
+        List<Message> messages =messagingService.getMessagesReceivedFrom(authentication.getLoggedUser().getID(), friend.getID(), startDate, endDate);
         List<ReportItem> report = new ArrayList<>();
 
         messages.forEach(message-> {
@@ -531,6 +536,17 @@ public class Controller extends Observable {
         return eventService.getAttendingEvents(authentication.getLoggedUser().getID());
     }
 
+    public void setNotificationsThread(NotificationsThread notificationsThread) {
+        this.notificationsThread = notificationsThread;
+    }
+
+    public NotificationsThread getNotificationsThread() {
+        return notificationsThread;
+    }
+
+    public Authentication getAuthentication() {
+        return authentication;
+    }
 }
 
 
