@@ -24,7 +24,7 @@
     </AnchorPane>
 
     <ScrollPane id="messagesScrollPane" fx:id="messagesScrollPane" hbarPolicy="NEVER" layoutY="50.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="465.0" prefWidth="700.0">
-        <GridPane fx:id="messagesPane" prefHeight="463.0" prefWidth="700.0" vgap="20.0">
+        <GridPane fx:id="messagesPane" prefHeight="463.0" prefWidth="685.0" vgap="20.0">
 
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="230.0" minWidth="10.0" prefWidth="200.0" />

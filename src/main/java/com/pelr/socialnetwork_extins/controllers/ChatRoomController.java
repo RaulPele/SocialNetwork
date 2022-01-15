@@ -7,11 +7,15 @@ import com.pelr.socialnetwork_extins.service.Controller;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
 import java.util.List;
@@ -20,6 +24,8 @@ public class ChatRoomController {
 
     private Controller controller;
     private ChatRoom chatRoom;
+    private boolean replyModeOn;
+    private Message repliedToMessage;
 
     @FXML
     private AnchorPane rootLayout;
@@ -93,22 +99,80 @@ public class ChatRoomController {
 
     private Node createMessageView(Message message) {
         VBox messageBox = new VBox();
-        HBox buttonsBox = new HBox();
+        HBox messageAndReplyBox = new HBox();
 
+        ImageView replyButton = new ImageView(new Image(String.valueOf(MainApplication.class.getResource("assets/reply-button.png"))));
         Label messageLabel = new Label(message.getMessage());
+        Label repliedToLabel = new Label();
 
-        messageBox.getChildren().add(messageLabel);
+        replyButton.setVisible(false);
 
-        messageBox.setSpacing(5);
-        buttonsBox.setSpacing(3);
+        if(message.getRepliedTo() != null) {
+            Message repliedTo = message.getRepliedTo();
+            repliedToLabel.setText(repliedTo.getMessage());
+            repliedToLabel.setId("repliedToLabel");
+            messageBox.getChildren().add(repliedToLabel);
+        }
 
         if (message.getFrom().getEmail().equals(controller.getLoggedUser().getEmail())) {
             messageLabel.setId("sentMessageLabel");
+
+            messageAndReplyBox.getChildren().add(messageLabel);
+            messageAndReplyBox.getChildren().add(replyButton);
+            VBox.setMargin(repliedToLabel, new Insets(0, 5, 0 ,0));
         } else {
             messageLabel.setId("receivedMessageLabel");
+            messageBox.setAlignment(Pos.TOP_RIGHT);
+            messageAndReplyBox.setAlignment(Pos.TOP_RIGHT);
+            messageAndReplyBox.getChildren().add(replyButton);
+            messageAndReplyBox.getChildren().add(messageLabel);
+            VBox.setMargin(repliedToLabel, new Insets(0, 0, 0 ,5));
         }
 
+        messageBox.getChildren().add(messageAndReplyBox);
+        messageAndReplyBox.setSpacing(3);
+
+        messageAndReplyBox.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> replyButton.setVisible(true));
+        messageAndReplyBox.addEventHandler(MouseEvent.MOUSE_EXITED, event -> replyButton.setVisible(false));
+        replyButton.setOnMouseClicked(e -> {
+            changeReplyMode(message);
+        });
+
         return messageBox;
+    }
+
+    private void changeReplyMode (Message message){
+        if(replyModeOn) {
+            exitReplyMode();
+        }else{
+            enterReplyMode(message);
+        }
+    }
+
+    private void exitReplyMode() {
+        if(replyModeOn) {
+            replyModeOn= false;
+            repliedToMessage = null;
+
+            Node replyPopup = rootLayout.lookup("#replyPopup");
+            rootLayout.getChildren().remove(replyPopup);
+        }
+    }
+
+    private void enterReplyMode(Message message) {
+        VBox replyPopup = new VBox();
+        replyPopup.setId("replyPopup");
+        replyPopup.setLayoutX(35);
+        replyPopup.setLayoutY(475);
+        Label replyPopupLabel = new Label(message.getMessage());
+        replyPopupLabel.setId("replyPopupLabel");
+
+        replyPopup.getChildren().add(replyPopupLabel);
+        rootLayout.getChildren().add(replyPopup);
+        replyPopup.toFront();
+
+        repliedToMessage = message;
+        replyModeOn = true;
     }
 
     private void reply(Message replyTo) {
@@ -117,10 +181,6 @@ public class ChatRoomController {
             return;
         }
         chatRoom.reply(replyMessage, replyTo.getID());
-        //refreshScreen();
-        addMessageToLayout(chatRoom.getLastMessage());
-        messageTextField.clear();
-
     }
 
     private void replyToAll(Message replyTo) {
@@ -129,9 +189,6 @@ public class ChatRoomController {
             return;
         }
         chatRoom.replyToAll(replyMessage, replyTo.getID());
-        //refreshScreen();
-        addMessageToLayout(chatRoom.getLastMessage());
-        messageTextField.clear();
     }
 
     public void onSendButtonClicked(ActionEvent actionEvent) {
@@ -140,8 +197,12 @@ public class ChatRoomController {
             return;
         }
 
-        chatRoom.send(messageString);
-        //refreshScreen();
+        if(replyModeOn){
+            reply(repliedToMessage);
+            exitReplyMode();
+        } else {
+            chatRoom.send(messageString);
+        }
         addMessageToLayout(chatRoom.getLastMessage());
         messageTextField.clear();
     }
