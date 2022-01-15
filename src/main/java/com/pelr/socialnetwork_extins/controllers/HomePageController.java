@@ -101,6 +101,7 @@ public class HomePageController implements Observer {
         loadCustomSearchBar();
         loadEvents();
         controller.addObserver(this);
+        notificationCounter=0; //verify
     }
 
     private void loadContactsList(){
@@ -233,7 +234,6 @@ public class HomePageController implements Observer {
 
     private void changeToProfilePageScreen(String email) {
         try {
-           // controller.getNotificationsThread().stop();
             sceneManager.changeToProfilePageScene();
             sceneManager.centerStageOnScreen();
 
@@ -255,8 +255,6 @@ public class HomePageController implements Observer {
     private void changeToLoginScreen() {
 
         try{
-            //controller.getNotificationsThread().stop();
-
             sceneManager.changeToLoginScene();
             sceneManager.centerStageOnScreen();
 
