@@ -33,7 +33,6 @@ public class FriendsPageController {
     private Button backButton;
 
     private static final int MAX_COLUMN_COUNT = 2;
-
     private int rowCount, columnCount;
 
     public void setController(Controller controller) {

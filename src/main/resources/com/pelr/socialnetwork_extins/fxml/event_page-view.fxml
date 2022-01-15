@@ -28,7 +28,7 @@
             </Label>
             <VBox layoutY="46.0" prefHeight="231.0" prefWidth="434.0">
                <children>
-                  <Label id="numberOfParticipantsLabel" fx:id="numberOfParticipantsLabel" prefHeight="17.0" prefWidth="443.0" text="10 people are going">
+                  <Label id="numberOfParticipantsLabel" fx:id="numberOfParticipantsLabel" onMouseClicked="#onNumberOfParticipantsLabelClicked" prefHeight="17.0" prefWidth="443.0" text="10 people are going">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>

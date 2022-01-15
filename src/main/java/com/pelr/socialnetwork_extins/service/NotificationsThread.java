@@ -113,7 +113,6 @@ public class NotificationsThread extends Thread {
                         checkNotifications();
                     }else {
                         timer.cancel();
-
                     }
                 }
             }

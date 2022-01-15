@@ -1,0 +1,41 @@
+#rootLayout {
+    -fx-background-color: #1c1e21;
+}
+
+#participantsScrollPane {
+    -fx-background-color: transparent;
+}
+
+#participantsScrollPane .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-background-radius: 2em;
+}
+#participantsScrollPane .scroll-bar:vertical  .track{
+    -fx-background-color: transparent;
+    -fx-background-radius: 2em;
+}
+
+#participantsScrollPane .scroll-bar:vertical .thumb{
+    -fx-background-radius: 2em;
+
+}
+
+#participantsScrollPane .scroll-bar:vertical .increment-button,
+#participantsScrollPane .scroll-bar:vertical .decrement-button{
+    -fx-background-color :transparent;
+    -fx-background-radius : 0.0em;
+    -fx-padding :0.0 5px 0.0 0.0;
+}
+
+#participantsScrollPane .scroll-bar:vertical .increment-arrow,
+#participantsScrollPane .scroll-bar:vertical .decrement-arrow{
+    -fx-shape : " ";
+}
+
+#participantsGridPane {
+    -fx-background-color: #1c1e21;
+}
+
+#participantsScrollPane .viewport {
+    -fx-background-color: #1c1e21;
+}
